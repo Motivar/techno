@@ -10,8 +10,6 @@
 get_header();
 
 $plugin_dir = get_template_directory_uri(__FILE__);
-wp_enqueue_script('theme-slick-js', $plugin_dir . '/js/slick/slick.min.js', array(), false, true);
-wp_enqueue_style('theme-slick-css', $plugin_dir . '/js/slick/slick.css', true, '1.0.0');wp_enqueue_style('theme-slick-theme-css', $plugin_dir . '/js/slick/slick-theme.css', true, '1.0.0');
 ?>
 
 	<div id="primary" class="content-area">

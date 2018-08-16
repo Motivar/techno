@@ -21,6 +21,7 @@
 </head>
 
 <body <?php body_class(); ?>>
+<div id="bodymovin"><?php echo do_shortcode('[bodymovin anim_id="214"]');?></div>
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'multiplex' ); ?></a>
 		<section id="top-widget" class="top-widgets row global_padding u-full-width">
@@ -39,7 +40,7 @@
 		</nav><!-- #site-navigation -->
 
 		<div class="mobile_menu">
-		<div id="sidebar_menu"><div class="menu_enable" onclick="openNav()"><div class="rev_men_t"><?php //_e('menu', 'kazianis')?></div>
+		<div id="sidebar_menu"><div class="menu_enable" onclick="openNav()"><div class="rev_men_t"></div>
 <div class="hamburger hamburger--collapse js-hamburger">
   <div class="hamburger-box">
     <div class="hamburger-inner"></div>
@@ -62,7 +63,7 @@
 		</div>
 		</div>
 	</header><!-- #masthead -->
-
-	<div id="content" class="site-content">
+<div id="barba-wrapper">
+	<div id="content" class="site-content barba-container">
 
 	

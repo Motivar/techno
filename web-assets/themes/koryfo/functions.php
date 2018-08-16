@@ -7,81 +7,82 @@
  * @package koryfo
  */
 
-if ( ! function_exists( 'koryfo_setup' ) ) :
-	/**
-	 * Sets up theme defaults and registers support for various WordPress features.
-	 *
-	 * Note that this function is hooked into the after_setup_theme hook, which
-	 * runs before the init hook. The init hook is too late for some features, such
-	 * as indicating support for post thumbnails.
-	 */
-	function koryfo_setup() {
-		/*
-		 * Make theme available for translation.
-		 * Translations can be filed in the /languages/ directory.
-		 * If you're building a theme based on koryfo, use a find and replace
-		 * to change 'koryfo' to the name of your theme in all the template files.
-		 */
-		load_theme_textdomain( 'koryfo', get_template_directory() . '/languages' );
+if (!function_exists('koryfo_setup')):
+    /**
+     * Sets up theme defaults and registers support for various WordPress features.
+     *
+     * Note that this function is hooked into the after_setup_theme hook, which
+     * runs before the init hook. The init hook is too late for some features, such
+     * as indicating support for post thumbnails.
+     */
+    function koryfo_setup()
+{
+        /*
+         * Make theme available for translation.
+         * Translations can be filed in the /languages/ directory.
+         * If you're building a theme based on koryfo, use a find and replace
+         * to change 'koryfo' to the name of your theme in all the template files.
+         */
+        load_theme_textdomain('koryfo', get_template_directory() . '/languages');
 
-		// Add default posts and comments RSS feed links to head.
-		add_theme_support( 'automatic-feed-links' );
+        // Add default posts and comments RSS feed links to head.
+        add_theme_support('automatic-feed-links');
 
-		/*
-		 * Let WordPress manage the document title.
-		 * By adding theme support, we declare that this theme does not use a
-		 * hard-coded <title> tag in the document head, and expect WordPress to
-		 * provide it for us.
-		 */
-		add_theme_support( 'title-tag' );
+        /*
+         * Let WordPress manage the document title.
+         * By adding theme support, we declare that this theme does not use a
+         * hard-coded <title> tag in the document head, and expect WordPress to
+         * provide it for us.
+         */
+        add_theme_support('title-tag');
 
-		/*
-		 * Enable support for Post Thumbnails on posts and pages.
-		 *
-		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
-		 */
-		add_theme_support( 'post-thumbnails' );
+        /*
+         * Enable support for Post Thumbnails on posts and pages.
+         *
+         * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+         */
+        add_theme_support('post-thumbnails');
 
-		// This theme uses wp_nav_menu() in one location.
-		register_nav_menus( array(
-			'menu-1' => esc_html__( 'Primary', 'koryfo' ),
-		) );
+        // This theme uses wp_nav_menu() in one location.
+        register_nav_menus(array(
+            'menu-1' => esc_html__('Primary', 'koryfo'),
+        ));
 
-		/*
-		 * Switch default core markup for search form, comment form, and comments
-		 * to output valid HTML5.
-		 */
-		add_theme_support( 'html5', array(
-			'search-form',
-			'comment-form',
-			'comment-list',
-			'gallery',
-			'caption',
-		) );
+        /*
+         * Switch default core markup for search form, comment form, and comments
+         * to output valid HTML5.
+         */
+        add_theme_support('html5', array(
+            'search-form',
+            'comment-form',
+            'comment-list',
+            'gallery',
+            'caption',
+        ));
 
-		// Set up the WordPress core custom background feature.
-		add_theme_support( 'custom-background', apply_filters( 'koryfo_custom_background_args', array(
-			'default-color' => 'ffffff',
-			'default-image' => '',
-		) ) );
+        // Set up the WordPress core custom background feature.
+        add_theme_support('custom-background', apply_filters('koryfo_custom_background_args', array(
+            'default-color' => 'ffffff',
+            'default-image' => '',
+        )));
 
-		// Add theme support for selective refresh for widgets.
-		add_theme_support( 'customize-selective-refresh-widgets' );
+        // Add theme support for selective refresh for widgets.
+        add_theme_support('customize-selective-refresh-widgets');
 
-		/**
-		 * Add support for core custom logo.
-		 *
-		 * @link https://codex.wordpress.org/Theme_Logo
-		 */
-		add_theme_support( 'custom-logo', array(
-			'height'      => 250,
-			'width'       => 250,
-			'flex-width'  => true,
-			'flex-height' => true,
-		) );
-	}
+        /**
+         * Add support for core custom logo.
+         *
+         * @link https://codex.wordpress.org/Theme_Logo
+         */
+        add_theme_support('custom-logo', array(
+            'height' => 250,
+            'width' => 250,
+            'flex-width' => true,
+            'flex-height' => true,
+        ));
+    }
 endif;
-add_action( 'after_setup_theme', 'koryfo_setup' );
+add_action('after_setup_theme', 'koryfo_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -90,69 +91,80 @@ add_action( 'after_setup_theme', 'koryfo_setup' );
  *
  * @global int $content_width
  */
-function koryfo_content_width() {
-	// This variable is intended to be overruled from themes.
-	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
-	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-	$GLOBALS['content_width'] = apply_filters( 'koryfo_content_width', 640 );
+function koryfo_content_width()
+{
+    // This variable is intended to be overruled from themes.
+    // Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
+    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+    $GLOBALS['content_width'] = apply_filters('koryfo_content_width', 640);
 }
-add_action( 'after_setup_theme', 'koryfo_content_width', 0 );
+add_action('after_setup_theme', 'koryfo_content_width', 0);
 
 /**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function koryfo_widgets_init() {
-	register_sidebar( array(
-		'name'          => esc_html__( 'Sidebar', 'koryfo' ),
-		'id'            => 'sidebar-1',
-		'description'   => esc_html__( 'Add widgets here.', 'koryfo' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="widget-title">',
-		'after_title'   => '</h2>',
-    ) );
-    register_sidebar( array(
-        'name'          => esc_html__( 'Footer Menu Left', 'kazianis' ),
-        'id'            => 'footer_menu_left',
-        'description'   => esc_html__( 'Add widgets here.', 'kazianis' ),
+function koryfo_widgets_init()
+{
+    register_sidebar(array(
+        'name' => esc_html__('Sidebar', 'koryfo'),
+        'id' => 'sidebar-1',
+        'description' => esc_html__('Add widgets here.', 'koryfo'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</section>',
-        'before_title'  => '<h2 class="widget-title">',
-        'after_title'   => '</h2>',
-    ) );
-    register_sidebar( array(
-        'name'          => esc_html__( 'Footer Menu Right', 'kazianis' ),
-        'id'            => 'footer_menu_right',
-        'description'   => esc_html__( 'Add widgets here.', 'kazianis' ),
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ));
+    register_sidebar(array(
+        'name' => esc_html__('Footer Menu Left', 'kazianis'),
+        'id' => 'footer_menu_left',
+        'description' => esc_html__('Add widgets here.', 'kazianis'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</section>',
-        'before_title'  => '<h2 class="widget-title">',
-        'after_title'   => '</h2>',
-    ) );
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ));
+    register_sidebar(array(
+        'name' => esc_html__('Footer Menu Right', 'kazianis'),
+        'id' => 'footer_menu_right',
+        'description' => esc_html__('Add widgets here.', 'kazianis'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ));
 }
-add_action( 'widgets_init', 'koryfo_widgets_init' );
+add_action('widgets_init', 'koryfo_widgets_init');
 
 /**
  * Enqueue scripts and styles.
  */
-function koryfo_scripts() {
-    wp_enqueue_style( 'koryfo-style', get_stylesheet_uri() );
-    
-    wp_enqueue_style( 'koryfo-mystyle', get_template_directory_uri().'/mystyle.min.css' );
+function koryfo_scripts()
+{
+    $path = get_template_directory_uri();
+    wp_enqueue_style('koryfo-style', get_stylesheet_uri());
 
-    wp_enqueue_script( 'koryfo-sticky-menu', get_template_directory_uri() . '/js/sticky_menu.js', array(), '20180807', true );
+    wp_enqueue_style('koryfo-mystyle', $path . '/mystyle.min.css');
 
-	wp_enqueue_script( 'koryfo-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+    wp_enqueue_script('theme-slick-js', $path . '/js/slick/slick.min.js', array(), false, true);
+    wp_enqueue_style('theme-slick-css', $path . '/js/slick/slick.css', true, '1.0.0');
+    wp_enqueue_style('theme-slick-theme-css', $path . '/js/slick/slick-theme.css', true, '1.0.0');
+    wp_enqueue_script('koryfo-sticky-menu', $path . '/js/sticky_menu.js', array(), '20180807', true);
 
-	wp_enqueue_script( 'koryfo-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+    wp_enqueue_script('koryfo-navigation', $path . '/js/navigation.js', array(), '20151215', true);
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+    wp_enqueue_script('koryfo-skip-link-focus-fix', $path . '/js/skip-link-focus-fix.js', array(), '20151215', true);
+    wp_enqueue_script('krf-gmap-js', 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDEB3THsEXL1-4pmOPgkXfb0eFwDzZ0-R0');
+
+    wp_enqueue_script('techno-barba', $path . '/js/barba.js', array(), '20180808', true);
+    wp_enqueue_script('techno-main', $path . '/js/techno.js', array(), '20180809', true);
+
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
 }
-add_action( 'wp_enqueue_scripts', 'koryfo_scripts' );
+add_action('wp_enqueue_scripts', 'koryfo_scripts');
 
 /**
  * Implement the Custom Header feature.
@@ -177,87 +189,74 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Load Jetpack compatibility file.
  */
-if ( defined( 'JETPACK__VERSION' ) ) {
-	require get_template_directory() . '/inc/jetpack.php';
+if (defined('JETPACK__VERSION')) {
+    require get_template_directory() . '/inc/jetpack.php';
 }
-
-
 
 /*motivar code*/
 
-
-
 function mtv_get_my_custom_posts($post_type)
-    {
+{
     $msg = array();
     $all = array(
         array(
             'post' => 'krf_projects',
-            'sn' => __('Project', 'koryfo') ,
-            'pl' => __('Projects', 'koryfo') ,
+            'sn' => __('Project', 'koryfo'),
+            'pl' => __('Projects', 'koryfo'),
             'args' => array(
                 'title',
                 'editor',
-                'thumbnail'
-            ) ,
-            'slug' => get_option('krf_projects_slug') ? : 'krf_projects',
+                'thumbnail',
+            ),
+            'slug' => get_option('krf_projects_slug') ?: 'krf_projects',
             'chk' => true,
             'mnp' => 2,
             'icn' => '',
             'capp' => array(
                 1,
                 2,
-                3
-            ) ,
+                3,
+            ),
             'meta_arrays' => array(
-              //  'sbp_extra_booking_meta'
-            ) ,
+                //  'sbp_extra_booking_meta'
+            ),
             'mtv_enable' => 1,
-            'en_slg'=>1,
-			'tax_types' => 
-				array(
-                __('Services', 'koryfo') ,
-                __('Service', 'koryfo') ,
-                'krf_services'
-				),
-        )   
+            'en_slg' => 1,
+            'tax_types' => array(
+                __('Services', 'koryfo'),
+                __('Service', 'koryfo'),
+                'krf_services',
+            ),
+        ),
     );
-    if ($post_type == 'all')
-        {
+    if ($post_type == 'all') {
         $msg = $all;
-        }
-      else
-        {
-        foreach($all as $k)
-            {
-            if ($k['post'] == $post_type)
-                {
+    } else {
+        foreach ($all as $k) {
+            if ($k['post'] == $post_type) {
                 $msg = $k;
-                }
             }
         }
+    }
 
     return $msg;
-    }
+}
 
 add_action('init', 'mtv_register_my_cpts', 10);
 
 function mtv_register_my_cpts()
-    {
+{
     $names = mtv_get_my_custom_posts('all');
-    foreach($names as $n)
-        {
+    foreach ($names as $n) {
         $enable = isset($n['mtv_enable']) ? $n['mtv_enable'] : 1;
         $relation = isset($n['mtv_relation']) ? $n['mtv_relation'] : 1;
-        if ($enable == 1 && $relation == 1)
-            {
+        if ($enable == 1 && $relation == 1) {
             $extra_sl = isset($n['extra_slug']) ? '/%' . $n['extra_slug'] . '%' : '';
-            $wpml=(int)function_exists('icl_object_id');
-            if ($wpml != 0)
-                {
+            $wpml = (int) function_exists('icl_object_id');
+            if ($wpml != 0) {
                 $extra_sl = '';
-                }
-		
+            }
+
             $chk = $n['chk'];
             $labels = $args = array();
             $labels = array(
@@ -274,7 +273,7 @@ function mtv_register_my_cpts()
                 'search_items' => __('Search', 'koryfo') . ' ' . $n['sn'],
                 'not_found' => __('No', 'koryfo') . ' ' . $n['pl'],
                 'not_found_in_trash' => __('No Trashed', 'koryfo') . ' ' . $n['pl'],
-                'parent' => 'Parent ' . $n['sn']
+                'parent' => 'Parent ' . $n['sn'],
             );
             $args = array(
                 'labels' => $labels,
@@ -290,87 +289,75 @@ function mtv_register_my_cpts()
                 'rewrite' => array(
                     'slug' => $n['post'] . $extra_sl,
                     'with_front' => true,
-                    'feeds' => true //$chk
-                ) ,
+                    'feeds' => true, //$chk
+                ),
                 'query_var' => true,
                 'supports' => $n['args'],
-                'show_in_rest' => true //$chk
+                'show_in_rest' => true, //$chk
             );
-            if (!empty($n['slug']))
-                {
+            if (!empty($n['slug'])) {
                 $args['rewrite']['slug'] = $n['slug'] . $extra_sl;
-                }
+            }
 
-            if (!empty($n['mnp']))
-                {
+            if (!empty($n['mnp'])) {
                 $args['menu_position'] = $n['mnp'];
-                }
+            }
 
-            if (!empty($n['icn']))
-                {
+            if (!empty($n['icn'])) {
                 $args['menu_icon'] = $n['icn'];
-                }
+            }
 
-            if ($extra_sl != '')
-                {
+            if ($extra_sl != '') {
                 $args['rewrite']['has_archive'] = $n['extra_slug'];
-                }
+            }
 
-            if ((isset($n['sbp_book']) && $n['sbp_book'] == 1) && (isset($n['sbp_main_product']) && $n['sbp_main_product'] == 1) && isset($n['sbp_period_checkout_type']))
-                {
+            if ((isset($n['sbp_book']) && $n['sbp_book'] == 1) && (isset($n['sbp_main_product']) && $n['sbp_main_product'] == 1) && isset($n['sbp_period_checkout_type'])) {
                 define('sbp_period_checkout_type', $n['sbp_period_checkout_type']);
-                }
+            }
 
             /*enable custom capabilities
             if (isset($n['capp']) && $n['capp'] >= 1)
-                {
-                $capps = create_custom_capabilities($n['post'], 1);
-                $k = array_merge($args, $capps);
-                $args = $k;
-                }
-			*/
+            {
+            $capps = create_custom_capabilities($n['post'], 1);
+            $k = array_merge($args, $capps);
+            $args = $k;
+            }
+             */
 
             register_post_type($n['post'], $args);
-            if (isset($n['en_slg']) && $n['en_slg'] == 1 && $chk == true)
-                {
+            if (isset($n['en_slg']) && $n['en_slg'] == 1 && $chk == true) {
                 add_action('load-options-permalink.php',
-                function ($views) use($n)
-                    {
-                    if (isset($_POST[$n['post'] . '_slug']))
-                        {
-                        update_option($n['post'] . '_slug', sanitize_title_with_dashes($_POST[$n['post'] . '_slug']));
+                    function ($views) use ($n) {
+                        if (isset($_POST[$n['post'] . '_slug'])) {
+                            update_option($n['post'] . '_slug', sanitize_title_with_dashes($_POST[$n['post'] . '_slug']));
                         }
 
-                    add_settings_field($n['post'] . '_slug', __($n['pl'] . ' Slug') ,
-                    function ($views) use($n)
-                        {
-                        $value = get_option($n['post'] . '_slug');
-                        echo '<input type="text" value="' . esc_attr($value) . '" name="' . $n['post'] . '_slug' . '" id="' . $n['post'] . '_slug' . '" class="regular-text" placeholder="' . $n['slug'] . '"/>';
-                        }
+                        add_settings_field($n['post'] . '_slug', __($n['pl'] . ' Slug'),
+                            function ($views) use ($n) {
+                                $value = get_option($n['post'] . '_slug');
+                                echo '<input type="text" value="' . esc_attr($value) . '" name="' . $n['post'] . '_slug' . '" id="' . $n['post'] . '_slug' . '" class="regular-text" placeholder="' . $n['slug'] . '"/>';
+                            }
 
-                    , 'permalink', 'optional');
+                            , 'permalink', 'optional');
                     });
-                }
+            }
 
-            if (isset($n['custom_status']) && !empty($n['custom_status']))
-                {
-                foreach($n['custom_status'] as $k => $v)
-                    {
+            if (isset($n['custom_status']) && !empty($n['custom_status'])) {
+                foreach ($n['custom_status'] as $k => $v) {
                     register_post_status($k, array(
-                        'label' => __($k, $n['post']) ,
+                        'label' => __($k, $n['post']),
                         'public' => true,
                         'exclude_from_search' => false,
                         'show_in_admin_all_list' => true,
                         'show_in_admin_status_list' => true,
-                        'label_count' => _n_noop($v . '  <span class="count">(%s)</span>', $v . ' <span class="count">(%s)</span>') ,
+                        'label_count' => _n_noop($v . '  <span class="count">(%s)</span>', $v . ' <span class="count">(%s)</span>'),
                     ));
-                    }
                 }
+            }
 
             /*end for registering custom types*/
             /*check for taxes*/
-            if (isset($n['tax_types']) && !empty($n['tax_types']))
-                {
+            if (isset($n['tax_types']) && !empty($n['tax_types'])) {
                 $i = $n['tax_types'];
                 $labels = $args = array();
                 $labels = array(
@@ -381,13 +368,13 @@ function mtv_register_my_cpts()
                     'update_item' => __('Update', 'koryfo') . ' ' . $i[1],
                     'add_new_item' => __('New', 'koryfo') . ' ' . $i[1],
                     'new_item_name' => __('New', 'koryfo') . ' ' . $i[1],
-                    'parent_item' => $i[1] . ' ' . __('Parent', 'koryfo') ,
-                    'parent_item_colon' => $i[1] . ' ' . __('Parent :)', 'koryfo') ,
+                    'parent_item' => $i[1] . ' ' . __('Parent', 'koryfo'),
+                    'parent_item_colon' => $i[1] . ' ' . __('Parent :)', 'koryfo'),
                     'search_items' => __('Search', 'koryfo') . ' ' . $i[0],
                     'popular_items' => __('Popular', 'koryfo') . ' ' . $i[0],
-                    'separate_items_with_commas' => __('Split', 'koryfo') . ' ' . $i[0] . ' ' . __('with comma', 'koryfo') ,
+                    'separate_items_with_commas' => __('Split', 'koryfo') . ' ' . $i[0] . ' ' . __('with comma', 'koryfo'),
                     'add_or_remove_items' => __('Insert / Delete', 'koryfo') . ' ' . $i[1],
-                    'choose_from_most_used' => __('Select', 'koryfo') . ' ' . $i[0]
+                    'choose_from_most_used' => __('Select', 'koryfo') . ' ' . $i[0],
                 );
                 $args = array(
                     'labels' => $labels,
@@ -396,66 +383,62 @@ function mtv_register_my_cpts()
                     'show_ui' => true,
                     'query_var' => true,
                     'rewrite' => array(
-                        'slug' => get_option($i[2] . '_slug') ? : $i[2],
-                        'with_front' => false
-                    ) ,
-                    'show_admin_column' => false
+                        'slug' => get_option($i[2] . '_slug') ?: $i[2],
+                        'with_front' => false,
+                    ),
+                    'show_admin_column' => false,
                 );
                 register_taxonomy($i[2], array(
-                    $n['post']
-                ) , $args);
-                if (isset($i[3]) && $i[3] == 1)
-                    {
+                    $n['post'],
+                ), $args);
+                if (isset($i[3]) && $i[3] == 1) {
                     add_action('load-options-permalink.php',
-                    function ($views) use($i)
-                        {
-                        if (isset($_POST[$i[2] . '_slug']) && !empty($_POST[$i[2] . '_slug']))
-                            {
-                            update_option($i[2] . '_slug', sanitize_title_with_dashes($_POST[$i[2] . '_slug']));
+                        function ($views) use ($i) {
+                            if (isset($_POST[$i[2] . '_slug']) && !empty($_POST[$i[2] . '_slug'])) {
+                                update_option($i[2] . '_slug', sanitize_title_with_dashes($_POST[$i[2] . '_slug']));
                             }
 
-                        add_settings_field($i[2] . '_slug', __($i[0] . ' Slug') ,
-                        function ($views) use($i)
-                            {
-                            $value = get_option($i[2] . '_slug');
-                            echo '<input type="text" value="' . esc_attr($value) . '" name="' . $i[2] . '_slug' . '" id="' . $i[2] . '_slug' . '" class="regular-text" placeholder="' . $i[2] . '"/>';
-                            }
+                            add_settings_field($i[2] . '_slug', __($i[0] . ' Slug'),
+                                function ($views) use ($i) {
+                                    $value = get_option($i[2] . '_slug');
+                                    echo '<input type="text" value="' . esc_attr($value) . '" name="' . $i[2] . '_slug' . '" id="' . $i[2] . '_slug' . '" class="regular-text" placeholder="' . $i[2] . '"/>';
+                                }
 
-                        , 'permalink', 'optional');
+                                , 'permalink', 'optional');
                         });
-                    }
                 }
+            }
 
             /*end for adding*/
-            }
         }
+    }
 
 /*
-    if (sbp_refact==1)
-    {
-    /* Filter the single_template with our custom function*/
+if (sbp_refact==1)
+{
+/* Filter the single_template with our custom function*/
 /*    add_filter('single_template', 'sbp_custom_templates');
-    }
-*/
+}
+ */
 
-    }
+}
 
-add_action('init','mtv_definitions');
+add_action('init', 'mtv_definitions');
 function mtv_definitions()
 {
-	$wpml=(int)function_exists('icl_object_id');
-	define('mtv_wpml',$wpml);
+    $wpml = (int) function_exists('icl_object_id');
+    define('mtv_wpml', $wpml);
 }
 
 add_action('init', 'custom_image_sizes');
 
-function custom_image_sizes() {
-    for ($i=2;$i<=15;$i++)
-        {
-        $d=$i-1;
-        add_image_size('custom-size-'.$i,$i*100,9999,false);
-        }
+function custom_image_sizes()
+{
+    for ($i = 2; $i <= 15; $i++) {
+        $d = $i - 1;
+        add_image_size('custom-size-' . $i, $i * 100, 9999, false);
     }
+}
 
 if (!function_exists('custom_image_element')) {
 
@@ -506,105 +489,94 @@ if (!function_exists('custom_image_element')) {
     }
 }
 
-
 add_shortcode('projects_slider', 'projects_slider_func');
 
 function projects_slider_func($atts)
-{   
+{
     extract(shortcode_atts(array(
         'post_type' => 'krf_projects',
         'number' => '-1',
         'slick' => '1',
-        'img_show' => 'contain'
+        'img_show' => 'contain',
         /* insert post_type*/
     ), $atts));
-
-
-    if ($slick == 1) {
-        $plugin_dir = get_template_directory_uri(__FILE__);
-        wp_enqueue_script('theme-slick-js', $plugin_dir . '/js/slick/slick.min.js', array(), false, true);
-        wp_enqueue_style('theme-slick-css', $plugin_dir . '/js/slick/slick.css', true, '1.0.0');
-        wp_enqueue_style('theme-slick-theme-css', $plugin_dir . '/js/slick/slick-theme.css', true, '1.0.0');
-    }
     $msg = '';
 
-    $args=array(
-    'post_type' => $post_type,
-    'posts_per_page' => $number,
-    'post_status' => 'publish'
+    $args = array(
+        'post_type' => $post_type,
+        'posts_per_page' => $number,
+        'post_status' => 'publish',
     );
     $posts = get_posts($args);
     $msg = '
     <div class="projects_slider">
         <div class="image_section">
             <div class="slider-for">';
-        foreach ($posts as $post) {
-            $img = get_post_meta($post->ID, '_thumbnail_id', true) ?: '';
-            $image  = custom_image_element($img, $img_show);
-            $link = get_permalink($post->ID);
-            $msg .= '<div class="slider_img_container"><a href="'.$link.'">'.$image.'</a></div>';
-        }
-        $msg .= '
+    foreach ($posts as $post) {
+        $img = get_post_meta($post->ID, '_thumbnail_id', true) ?: '';
+        $image = custom_image_element($img, $img_show);
+        $link = get_permalink($post->ID);
+        $msg .= '<div class="slider_img_container"><a href="' . $link . '">' . $image . '</a></div>';
+    }
+    $msg .= '
             </div>
         </div>
         <div class="title_section">
             <div class="slider-nav">';
-            foreach ($posts as $post) {
-                $msg .= '<div class="slider_title_container"><h3>'.$post->post_title.'</h3></div>';
-            }
-            $msg .=
-            '</div>
+    foreach ($posts as $post) {
+        $msg .= '<div class="slider_title_container"><h3>' . $post->post_title . '</h3></div>';
+    }
+    $msg .=
+        '</div>
         </div>';
 
-    $msg .= 
-    '</div>';
+    $msg .=
+        '</div>';
 
     return $msg;
 }
 
-
 add_shortcode('custom_button', 'custom_button_func');
 
 function custom_button_func($atts)
-{   
+{
     extract(shortcode_atts(array(
         'title' => '',
         'link' => '',
         'post_id' => '',
         'term_id' => '',
-        'post_type_archive' => ''
+        'post_type_archive' => '',
     ), $atts));
 
     $msg = '';
     if (!empty($post_id)) {
         $link = get_permalink($post_id);
+    } elseif (!empty($term_id)) {
+        $link = get_term_link($term_id);
+    } elseif (!empty($post_type_archive)) {
+        $link = get_post_type_archive_link($post_type_archive);
     }
-    elseif (!empty($term_id)) {
-            $link = get_term_link($term_id) ;
-    }
-     elseif (!empty($post_type_archive)) {
-                $link = get_post_type_archive_link($post_type_archive);
-     }
 
-    $msg .= '<div class="custom_button_wrap"><div class="custom_button"><a href="'.$link.'"><h2>'.$title.'</h2></a></div></div>';
+    $msg .= '<div class="custom_button_wrap"><div class="custom_button"><a href="' . $link . '"><h2>' . $title . '</h2></a></div></div>';
 
     return $msg;
 
 }
 
-add_shortcode( 'projects_map', 'projects_map_function' );
+add_shortcode('projects_map', 'projects_map_function');
 
-function projects_map_function( $atts ) {
-    wp_enqueue_script( 'krf-gmap-js', 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDEB3THsEXL1-4pmOPgkXfb0eFwDzZ0-R0' );
+function projects_map_function($atts)
+{
+    
 
     $msg .= '<div id="map_wrapper">
                 <div id="map_canvas" class="mapping"></div>
             </div>';
-    $args  = array(
+    $args = array(
         'post_type' => 'krf_projects',
         'posts_per_page' => '-1',
         'post_status' => 'publish',
-        'field' => 'id'
+        'field' => 'id',
     );
     $posts = get_posts($args);
     $projects_array = array();
@@ -619,17 +591,17 @@ function projects_map_function( $atts ) {
 
         $project_array = array(
             'title' => $title,
-            'lat'   => $latitude,
-            'lng'   => $longtitude,
-            'link'  => $permalink
+            'lat' => $latitude,
+            'lng' => $longtitude,
+            'link' => $permalink,
         );
 
         $projects_array[] = $project_array;
     }
     //print_r($projects_array);
     $projects = json_encode($projects_array);
-   // print_r($projects);
-    $msg .= '<div class="coordinates krf_hidden">'.$projects.'</div>';
+    // print_r($projects);
+    $msg .= '<div class="coordinates krf_hidden">' . $projects . '</div>';
 
     return $msg;
 }
@@ -637,60 +609,53 @@ function projects_map_function( $atts ) {
 add_shortcode('project_services', 'project_services_func');
 
 function project_services_func($atts)
-{   
+{
     extract(shortcode_atts(array(
-        'number' => '4'
+        'number' => '4',
     ), $atts));
 
-    $services = get_terms( array(
-    'taxonomy' => 'krf_services',
-    'hide_empty' => false,
-    'post_status' => 'publish',
-    'number' => $number
-    ) );
+    $services = get_terms(array(
+        'taxonomy' => 'krf_services',
+        'hide_empty' => false,
+        'post_status' => 'publish',
+        'number' => $number,
+    ));
 
     $msg .= '<div class="services_list">';
     foreach ($services as $service) {
         $link = get_term_link($service->term_id);
-        $msg .= '<div class="service_item"><a href="'.$link.'"><h2>'.$service->name.'</h2></a></div>';
+        $msg .= '<div class="service_item"><a href="' . $link . '"><h2>' . $service->name . '</h2></a></div>';
     }
     $msg .= '</div>';
 
     return $msg;
 }
 
-
 add_shortcode('partners_slider', 'partners_slider_func');
 
 function partners_slider_func($atts)
-{   
+{
     extract(shortcode_atts(array(
         'number' => '',
         'columns' => '4',
         'mcolumns' => '3',
         'scolumns' => '1',
-        'import_scripts' => '0' /** use "1" if you want to enqueue slick*/
+        'import_scripts' => '0', /** use "1" if you want to enqueue slick*/
     ), $atts));
 
-    if ($import_scripts == 1) {
-        $plugin_dir = get_template_directory_uri(__FILE__);
-        wp_enqueue_script('ps_theme-slick-js', $plugin_dir . '/js/slick/slick.min.js', array(), false, true);
-        wp_enqueue_style('ps_theme-slick-css', $plugin_dir . '/js/slick/slick.css', true, '1.0.0');
-        wp_enqueue_style('ps_theme-slick-theme-css', $plugin_dir . '/js/slick/slick-theme.css', true, '1.0.0');
-    }
-    $partners = get_terms( array(
-    'taxonomy' => 'krf_partners',
-    'hide_empty' => false,
-    'post_status' => 'publish',
-    'number' => $number
-    ) );
+    $partners = get_terms(array(
+        'taxonomy' => 'krf_partners',
+        'hide_empty' => false,
+        'post_status' => 'publish',
+        'number' => $number,
+    ));
 
-   // print_r($partners);
-    $msg = '<div class="partners_carousel" data-columns="'.$columns.'" data-mcolumns="'.$mcolumns.'" data-scolumns="'.$scolumns.'">';
+    // print_r($partners);
+    $msg = '<div class="partners_carousel" data-columns="' . $columns . '" data-mcolumns="' . $mcolumns . '" data-scolumns="' . $scolumns . '">';
     foreach ($partners as $partner) {
         $img = get_term_meta($partner->term_id, 'image', true) ?: '';
-        $image  = custom_image_element($img, 'contain');
-        $msg .= '<div class="partner">'.$image.'</div>';
+        $image = custom_image_element($img, 'contain');
+        $msg .= '<div class="partner">' . $image . '</div>';
     }
     $msg .= '</div>';
     return $msg;
