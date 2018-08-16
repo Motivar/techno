@@ -4,12 +4,12 @@ $standard-color: #000;
 $light-color: #fff;
 $secondary-color: #f1f1f1;
 
-
 #bodymovin
 {
 /*bodymovin code*/
 z-index: 900;
 max-width: 100%;
+width: 100%;
 text-align: center;
 position: fixed;
 top: 0px;
@@ -20,7 +20,7 @@ path{
  fill:rgb(255,255,255);
 }
 > div{
-     max-width: 40% !important;
+     max-width: 30% !important;
      margin: 0 auto;
      height: 100%;
 
