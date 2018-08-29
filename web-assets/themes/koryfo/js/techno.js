@@ -1,6 +1,8 @@
 (function ($) {
  "use strict";
  var items, numAnim;
+ var swidth = 0;
+
 
  $(document).ready(function () {
 
@@ -12,6 +14,11 @@
    	var counterObjects = {};
    items = [];
    myresize();
+    if ($('.krf_limit_text').length > 0) {
+        $('.krf_limit_text').each(function (index) {
+            shave_text(this);
+        });
+    }
    setTimeout(function () {
     if ($('.img_gallery').length > 0) {
      slider_slick('.img_gallery');
@@ -92,21 +99,21 @@
       openPhotoSwipe($(this).attr('src'));
      });
     }
-    if ($('.slider-for').length > 0) {
-     $('.slider-for').slick({
+     if ($('.projects_slider .slider-for').length > 0) {
+       $('.projects_slider .slider-for').slick({
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: false,
       fade: true,
-      asNavFor: '.slider-nav'
+         asNavFor: '.projects_slider .slider-nav'
      });
 
-     $('.slider-nav').slick({
+       $('.projects_slider .slider-nav').slick({
       nextArrow: '<img class="slick_next" src="' + techno_site + '/web-assets/uploads/2018/08/arrow.png" />',
       prevArrow: '<img class="slick_prev" src="' + techno_site + '/web-assets/uploads/2018/08/arrow.png" />',
       slidesToShow: 5,
       slidesToScroll: 1,
-      asNavFor: '.slider-for',
+         asNavFor: '.projects_slider .slider-for',
       dots: true,
       centerMode: true,
       focusOnSelect: true,
@@ -125,7 +132,32 @@
       }]
      });
     }
+     if ($('.services_slider .slider-for').length > 0) {
+       $('.services_slider .slider-for').slick({
+         slidesToShow: 1,
+         slidesToScroll: 1,
+         arrows: false,
+         fade: true,
+         dots: true,
+         asNavFor: '.services_slider .slider-nav'
+       });
 
+       $('.services_slider .slider-nav').slick({
+         nextArrow: '<img class="slick_next" src="' + techno_site + '/web-assets/uploads/2018/08/arrow.png" />',
+         prevArrow: '<img class="slick_prev" src="' + techno_site + '/web-assets/uploads/2018/08/arrow.png" />',
+         slidesToShow: 1,
+         slidesToScroll: 1,
+         asNavFor: '.services_slider .slider-for',
+         dots: true,
+         centerMode: false,
+         focusOnSelect: true,
+         vertical: false,
+         dots: false,
+         centerPadding: '60px',
+         autoplay: false,
+      //   autoplaySpeed: 5000
+       });
+     }
     if ($('.partners_carousel').length > 0) {
      slider_slick('.partners_carousel');
     }
@@ -292,6 +324,61 @@ setTimeout(function () {
 
   }
  }
+
+   function shave_text(element) {
+     var current_width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+     var original_text = $(element).attr('data-original_text');
+     var elements = [{
+       elem: 'krf_limit_text',
+       minwidth: 1,
+       maxwidth: 3000,
+       original_text: original_text
+     }];
+
+
+     if (current_width !== swidth) {
+       $.each(elements, function (i, clss) {
+         if ($('.' + clss.elem).length) {
+           var cld = '.' + clss.elem + '.shaved';
+           var clnd = '.' + clss.elem + ':not(.shaved)';
+           var hh = 80;
+           if ($(cld).length) {
+             shave(cld, hh);
+             $(cld).removeClass('shaved');
+           }
+           if (current_width >= clss.minwidth && ((clss.maxwidth > current_width && clss.maxwidth > 0) || clss.maxwidth == 0)) {
+             $(clnd).each(function () {
+
+               //  if (current_width < 768) {
+               //    hh += 20;
+               // } else {
+               if ($(this).attr('data-height')) {
+                 hh = parseInt($(this).attr('data-height'));
+               }
+               // }
+               //$(this).text(clss.original_text);
+               shave(this, hh, {
+                 classname: clss.elem
+               });
+               $(this).addClass('shaved');
+
+               if ($(this).attr('data-link')) {
+                 setTimeout(function () {
+                   $('.krf_limit_text.removed[data-link]').each(function (index) {
+                     $('<a href="' + $(this).attr('data-link') + '" class="read_more">  ' + $(this).attr('data-more_txt') + '</a>').appendTo(this);
+                     $(this).removeClass('removed');
+
+                   });
+                 }, 600);
+               }
+             });
+           }
+         }
+       });
+       swidth = current_width;
+     }
+   }
+
 
  function myresize() {
 

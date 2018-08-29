@@ -6,7 +6,6 @@
  *
  * @package koryfo
  */
-
 get_header();
 ?>
 

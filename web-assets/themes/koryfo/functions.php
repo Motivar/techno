@@ -536,6 +536,54 @@ function projects_slider_func($atts)
     return $msg;
 }
 
+add_shortcode('services_slider', 'services_slider_func');
+
+function services_slider_func($atts)
+{
+    
+    extract(shortcode_atts(array(
+        'taxonomy' => 'krf_services',
+        'slick' => '1',
+        'img_show' => 'contain'
+    ), $atts));
+
+    $services = get_terms(array(
+        'taxonomy' => $taxonomy,
+        'hide_empty' => false,
+        'post_status' => 'publish',
+    ));
+
+    $msg = '
+    <div class="services_slider">
+        <div class="image_section">
+            <div class="slider-for">';
+    foreach ($services as $service) {
+        $img = get_term_meta($service->term_id, 'image', true) ?: '';
+        $image = custom_image_element($img, $img_show);
+        $link = get_term_link($service->term_id);
+        $msg .= '<div class="slider_img_container"><a href="' . $link . '">' . $image . '</a></div>';
+    }
+    $msg .= '
+            </div>
+        </div>
+        <div class="title_section">
+            <div class="slider-nav">';
+    foreach ($services as $service) {
+        $msg .= '<div class="slider_title_container"><a href="'.$link.'"><h3>' . $service->name . '</h3></a></div>';
+    }
+    $msg .=
+        '</div>
+        </div>';
+
+    $msg .=
+        '</div>';    
+
+
+
+    return $msg;
+
+}
+
 add_shortcode('custom_button', 'custom_button_func');
 
 function custom_button_func($atts)
@@ -741,12 +789,6 @@ function sbp_breadcrumbs()
                 switch ($post_type) {
                     case 'krf_projects':
                         $taxonomy = 'krf_services';
-                        break;
-                    case 'sbp_services':
-                        $taxonomy = 'sbp_service_category';
-                        break;
-                    case 'sbp_map_points':
-                        $taxonomy = 'sbp_map_point_category';
                         break;
                     default:
                         $taxonomy = '';

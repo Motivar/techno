@@ -3,32 +3,29 @@ $highlight-color: #66cccc;
 $standard-color: #000;
 $light-color: #fff;
 $secondary-color: #f1f1f1;
-
-#bodymovin
-{
-/*bodymovin code*/
-z-index: 900;
-max-width: 100%;
-width: 100%;
-text-align: center;
-position: fixed;
-top: 0px;
-height: 100%;
-background: white;
-
-path{
- fill:rgb(255,255,255);
+#bodymovin {
+ /*bodymovin code*/
+ z-index: 900;
+ max-width: 100%;
+ width: 100%;
+ text-align: center;
+ position: fixed;
+ top: 0px;
+ height: 100%;
+ background: white;
+ path {
+  fill: rgb(255, 255, 255);
+ }
+ >div {
+  max-width: 30% !important;
+  margin: 0 auto;
+  height: 100%;
+  @media (max-width: 768px) {
+   max-width: 55% !important;
+  }
+ }
 }
-> div{
-     max-width: 30% !important;
-     margin: 0 auto;
-     height: 100%;
 
-      @media (max-width: 768px) {
-       max-width: 55% !important;
-      }
-}
-}
 .img_gallery {
  opacity: 0;
  &.slick-initialized {
@@ -36,16 +33,14 @@ path{
  }
 }
 
-
-
-
 body {
  h1,
  h3,
  h4,
  h5,
  h6,
- .counter {
+ .counter,
+ .description {
   font-family: exo_2_thin;
  }
  h2,
@@ -86,6 +81,7 @@ body {
 .hentry {
  margin: auto;
 }
+
 .trans {
  transition: 0.3s;
  -webkit-transition: 0.3s;
@@ -771,5 +767,183 @@ img {
     padding: 8px 8px 8px 32px;
    }
   }
+ }
+}
+
+#archive_projects {
+ margin-top: 90px;
+ .main_content_position {
+  .projects_masonry {
+   display: flex;
+   display: -webkit-flex;
+   flex-wrap: wrap;
+   .project_card_wrap {
+    &.normal {
+     width: 30%;
+     @media (max-width: 767px) {
+      width: 50% !important;
+     }
+     @media (max-width: 550px) {
+      width: 100% !important;
+     }
+    }
+    &.wide {
+     width: 40%;
+     @media (max-width: 767px) {
+      width: 50% !important;
+     }
+     @media (max-width: 550px) {
+      width: 100% !important;
+     }
+    } //  height: 450px;
+    padding: 0 20px 40px 20px;
+    .project_card {
+     //height: 100%;
+     .image {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 200px;
+      background: $light-color;
+      img {
+       opacity: 0.5;
+       @extend .trans;
+       &:hover {
+        opacity: 1;
+        cursor: pointer;
+        cursor: hand;
+       }
+      }
+     }
+     .title {
+      a {
+       h2 {
+        float: left;
+        color: $standard-color;
+        &:hover {
+         color: $highlight-color;
+        }
+       }
+      }
+     }
+     .description {
+      float: left;
+      @media (min-width: 768px) {
+       padding-left: 40px;
+      }
+      font-size: 1.5rem;
+     }
+    }
+   }
+  }
+ }
+ .side_msg {
+  top: 200px;
+  bottom: initial !important;
+ }
+}
+
+#services_archive {
+ margin-top: 90px;
+ .main_content_position {
+  .services_slider {
+    margin-bottom: 50px;
+   .image_section {
+    height: 300px;
+    width: 100%;
+    @media (min-width: 768px) {
+     height: 500px;
+     max-width: 900px;
+     width: 90%;
+    }
+    .slider-for {
+     height: 100%;
+     .slick-list {
+      height: 100%;
+      .slick-track {
+       height: 100%;
+       .slider_img_container {
+        height: 100%;
+        a {
+         height: 100%;
+         background: $light-color;
+         img {
+          opacity: 0.5;
+          @extend .trans;
+          &:hover {
+           opacity: 1;
+           cursor: pointer;
+           cursor: hand;
+          }
+         }
+        }
+       }
+      }
+     }
+     ul.slick-dots {
+       bottom: -100px;
+       li {
+         width: 30px;
+         height: 30px;
+         button {
+           height: 100%;
+           width: 100%;
+           &::before {
+            font-size: 12px;
+            line-height: 30px;
+            width: 30px;
+            height: 30px;
+           }
+         }
+         &.slick-active {
+           button {
+             &::before {
+               color: $highlight-color;
+             }
+           }
+         }
+       }
+
+     }
+    }
+   }
+   .title_section {
+    margin-top: -50px;
+    width: 100%;
+    max-width: 1200px;
+    .slider-nav {
+     .slick_prev {
+      display: none !important;
+     }
+     .slick_next {
+      position: absolute !important;
+      top: -200px !important;
+      right: 0 !important;
+      &:hover {
+       cursor: pointer;
+       cursor: hand;
+      }
+     }
+     .slider_title_container {
+      h3 {
+       margin-top: 0;
+       text-align: right;
+       float: right;
+       color: $standard-color;
+       @media (min-width: 768px) {
+        font-size: 2.5rem !important;
+       }
+       &:hover {
+        color: $highlight-color;
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ .side_msg {
+  top: 200px;
+  bottom: initial !important;
  }
 }
