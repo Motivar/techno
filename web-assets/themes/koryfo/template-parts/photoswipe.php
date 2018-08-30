@@ -19,13 +19,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-wp_enqueue_style( 'koryfo-pswp-css', get_template_directory_uri().'/template-parts/photoswipe/photoswipe.css' );
-    
-wp_enqueue_style( 'koryfo-pswp-default-skin-css', get_template_directory_uri().'/template-parts/photoswipe/default-skin.css' );
 
-wp_enqueue_script( 'koryfo-pswp-min-js', get_template_directory_uri().'/template-parts/photoswipe/photoswipe.min.js', array(), '20180813', true );
-
-wp_enqueue_script( 'koryfo-pswp-default-js', get_template_directory_uri().'/template-parts/photoswipe/photoswipe-ui-default.min.js', array(), '20180813', true );
 ?>
 
 <!-- Root element of PhotoSwipe. Must have class pswp. -->

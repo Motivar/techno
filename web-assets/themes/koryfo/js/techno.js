@@ -2,25 +2,70 @@
  "use strict";
  var items, numAnim;
  var swidth = 0;
-
+var options = {
+  useEasing: true,
+  useGrouping: true,
+  separator: ',',
+  decimal: '.',
+};
 
  $(document).ready(function () {
 
   $(window).resize(function () {
    myresize();
   });
-  //Barba.Dispatcher.on('newPageReady', function () { this uncomment for barba
- 
-   	var counterObjects = {};
+  Barba.Dispatcher.on('newPageReady', function () { /*uncomment this to remove barba*/
+   check_sticky();
+
+
+/*main_event*/
+window.onscroll = function () {
+  if (running == 0) {
+    setTimeout(sticky_it(), 300);
+  }
+}
+
+
+
    items = [];
    myresize();
-    if ($('.krf_limit_text').length > 0) {
-        $('.krf_limit_text').each(function (index) {
-            shave_text(this);
+
+
+  $(window).scroll(function () {
+    if (isScrolledIntoView($('.anim_numbers'))) {
+      if ($('.anim_numbers').length > 0) {
+        $('.anim_numbers').each(function (index) {
+          if (!($(this).hasClass('animated'))) {
+          var id = $(this).attr('id');
+          var start = $(this).attr('data-start');
+          var final = $(this).attr('data-final');
+          var decimals = $(this).attr('data-decimals');
+          var duration = $(this).attr('data-duration');
+
+          var number = new CountUp(id, start, final, decimals, duration, options);
+          if (!number.error) {
+            number.start();
+          } else {
+            console.error(number.error);
+          }
+          $(this).addClass('animated');
+          }
         });
+      }
     }
+  });
+
+
+   $('.side_msg').each(function (index) {
+     var width = $(this).width();
+     var final_width = width + 20;
+     $(this).css('top', final_width + 'px');
+   });
+
    setTimeout(function () {
     if ($('.img_gallery').length > 0) {
+           console.log('2');
+
      slider_slick('.img_gallery');
      var photoSwipe = $(".pswp").html();
      $('body').prepend('<div class="pswp">' + photoSwipe + '</div>');
@@ -96,7 +141,7 @@
      };
 
      $(document).on('click', '.img_gallery [data-sbp_pswp]', function () {
-      openPhotoSwipe($(this).attr('src'));
+      //openPhotoSwipe($(this).attr('src'));
      });
     }
      if ($('.projects_slider .slider-for').length > 0) {
@@ -198,8 +243,80 @@ setTimeout(function () {
    
 
 
-  //}); this uncomment for barba
+  });  /*remove this to remove bara*/
 
+
+  /*start removing for barba*/
+  /*initialize barba*/
+  Barba.Pjax.start();
+  Barba.Prefetch.init();
+
+
+  var FadeTransition = Barba.BaseTransition.extend({
+    start: function () {
+      /**
+       * This function is automatically called as soon the Transition starts
+       * this.newContainerLoading is a Promise for the loading of the new container
+       * (Barba.js also comes with an handy Promise polyfill!)
+       */
+
+      // As soon the loading is finished and the old page is faded out, let's fade the new page
+      Promise
+        .all([this.newContainerLoading, this.fadeOut()])
+        .then(this.fadeIn.bind(this));
+    },
+
+    fadeOut: function () {
+      return $(this.oldContainer).animate({
+        opacity: 0.8
+      }, 100).promise();
+    },
+
+    fadeIn: function () {
+      /**
+       * this.newContainer is the HTMLElement of the new Container
+       * At this stage newContainer is on the DOM (inside our #barba-container and with visibility: hidden)
+       * Please note, newContainer is available just after newContainerLoading is resolved!
+       */
+
+      $(window).scrollTop(0);
+      var _this = this;
+      var $el = $(this.newContainer);
+
+      $(this.oldContainer).hide();
+
+      $el.css({
+        visibility: 'visible',
+        opacity: 0.8
+      });
+
+      $el.animate({
+        opacity: 1
+      }, 200, function () {
+        /**
+         * Do not forget to call .done() as soon your transition is finished!
+         * .done() will automatically remove from the DOM the old Container
+         */
+
+        _this.done();
+      });
+    }
+  });
+
+  /**
+   * Next step, you have to tell Barba to use the new Transition
+   */
+
+  Barba.Pjax.getTransition = function () {
+    /**
+     * Here you can use your own logic!
+     * For example you can use different Transition based on the current page or link...
+     */
+
+    return FadeTransition;
+  };
+
+/*stop removing for barba*/
 
  });
 
@@ -283,6 +400,8 @@ setTimeout(function () {
    var columns = $(element).data('columns');
    var mcolumns = $(element).data('mcolumns');
    var scolumns = $(element).data('scolumns');
+   console.log(element);
+   console.log(columns);
 
    $(element).not('.slick-initialized').slick({
     nextArrow: '',
@@ -379,9 +498,28 @@ setTimeout(function () {
      }
    }
 
+   function isScrolledIntoView(elem) {
+     if ($(elem).length)
+     {
+
+     
+     var docViewTop = $(window).scrollTop();
+     var docViewBottom = docViewTop + $(window).height();
+
+     var elemTop = $(elem).offset().top;
+     var elemBottom = elemTop + $(elem).height();
+
+     return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+     }
+   }
+
 
  function myresize() {
-
+    if ($('.krf_limit_text').length > 0) {
+      $('.krf_limit_text').each(function (index) {
+        shave_text(this);
+      });
+    }
  }
 
 

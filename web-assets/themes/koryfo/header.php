@@ -49,14 +49,9 @@
 		</div></div>
 
 		<nav id="site-navigation-mobile" class="sidenav">
-		<div class="menuitems">
-		<?php
-				wp_nav_menu( array(
-					'theme_location' => 'mobile-menu',
-					'menu_id'        => 'mobile-menu',
-				) );
-			?></div>
-			<div class="big_message"><h3><?php echo __('KORYFO', 'koryfo'); ?></h3></div>
+			<div class="logo_section">
+						<div class="big_logo"><img src="https://koryfo.com/web-assets/uploads/2018/08/logo_color.png" /></div>
+			</div>
 			<div class="widgets_area"><?php dynamic_sidebar('mobile-menu-widgets'); ?></div>
 		</nav>
 

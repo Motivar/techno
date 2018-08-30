@@ -7,6 +7,19 @@
  * @package koryfo
  */
 
+if (is_admin())
+    {
+    if (function_exists('acf_add_options_page'))
+        {
+        $option_page1 = acf_add_options_page(array(
+            'page_title' => 'Social Media',
+            'menu_title' => 'Social Media',
+            'menu_slug' => 'mtv_social_media',
+            'capability' => 'read',
+            'redirect' => false
+        ));
+        }
+    }
 if (!function_exists('koryfo_setup')):
     /**
      * Sets up theme defaults and registers support for various WordPress features.
@@ -108,32 +121,42 @@ add_action('after_setup_theme', 'koryfo_content_width', 0);
 function koryfo_widgets_init()
 {
     register_sidebar(array(
-        'name' => esc_html__('Sidebar', 'koryfo'),
+        'name' => esc_html__('Sidebar', 'techno'),
         'id' => 'sidebar-1',
-        'description' => esc_html__('Add widgets here.', 'koryfo'),
+        'description' => esc_html__('Add widgets here.', 'techno'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget' => '</section>',
         'before_title' => '<h2 class="widget-title">',
         'after_title' => '</h2>',
     ));
     register_sidebar(array(
-        'name' => esc_html__('Footer Menu Left', 'kazianis'),
+        'name' => esc_html__('Footer Menu Left', 'techno'),
         'id' => 'footer_menu_left',
-        'description' => esc_html__('Add widgets here.', 'kazianis'),
+        'description' => esc_html__('Add widgets here.', 'techno'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget' => '</section>',
         'before_title' => '<h2 class="widget-title">',
         'after_title' => '</h2>',
     ));
     register_sidebar(array(
-        'name' => esc_html__('Footer Menu Right', 'kazianis'),
+        'name' => esc_html__('Footer Menu Right', 'techno'),
         'id' => 'footer_menu_right',
-        'description' => esc_html__('Add widgets here.', 'kazianis'),
+        'description' => esc_html__('Add widgets here.', 'techno'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget' => '</section>',
         'before_title' => '<h2 class="widget-title">',
         'after_title' => '</h2>',
     ));
+    register_sidebar(array(
+        'name' => esc_html__('Mobile Menu Widgets', 'techno'),
+        'id' => 'mobile-menu-widgets',
+        'description' => esc_html__('Add widgets here.', 'techno'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ));
+    
 }
 add_action('widgets_init', 'koryfo_widgets_init');
 
@@ -159,6 +182,16 @@ function koryfo_scripts()
 
     wp_enqueue_script('techno-barba', $path . '/js/barba.js', array(), '20180808', true);
     wp_enqueue_script('techno-main', $path . '/js/techno.js', array(), '20180809', true);
+    wp_enqueue_script('krf-shave-js', $path . '/js/shave.min.js', array(), false, true);  
+    wp_enqueue_script('count-up-js', $path . '/js/countUp.js', array(), false, true);
+
+wp_enqueue_style( 'koryfo-pswp-css', $path . '/template-parts/photoswipe/photoswipe.css' );
+    
+wp_enqueue_style( 'koryfo-pswp-default-skin-css', $path . '/template-parts/photoswipe/default-skin.css' );
+
+wp_enqueue_script( 'koryfo-pswp-min-js', $path . '/template-parts/photoswipe/photoswipe.min.js', array(), '20180813', true );
+
+wp_enqueue_script( 'koryfo-pswp-default-js', $path . '/template-parts/photoswipe/photoswipe-ui-default.min.js', array(), '20180813', true );
 
     if (is_singular() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
@@ -294,6 +327,7 @@ function mtv_register_my_cpts()
                 'query_var' => true,
                 'supports' => $n['args'],
                 'show_in_rest' => true, //$chk
+              //  'show_in_admin' => true
             );
             if (!empty($n['slug'])) {
                 $args['rewrite']['slug'] = $n['slug'] . $extra_sl;
@@ -381,6 +415,7 @@ function mtv_register_my_cpts()
                     'hierarchical' => true,
                     'label' => $i[2],
                     'show_ui' => true,
+                    'show_in_rest' => true,
                     'query_var' => true,
                     'rewrite' => array(
                         'slug' => get_option($i[2] . '_slug') ?: $i[2],
@@ -708,6 +743,70 @@ function partners_slider_func($atts)
     $msg .= '</div>';
     return $msg;
 }
+
+
+
+add_shortcode('social_media', 'social_media_func');
+
+function social_media_func($atts)
+{
+    extract(shortcode_atts(array(
+        'phone' => '',
+        'email' => ''
+    ), $atts));
+
+    $msg = '';
+        $social_media = get_field('social_media', 'options') ?: '';
+            if (!empty($social_media)){
+                $msg .= '<div class="social_media_container media_section">';
+                foreach ($social_media as $s) {
+                    switch ($s['name']) {
+                        case 'facebook':
+                            $icon = 'fa-facebook';
+                            break;
+                        case 'instagram':
+                            $icon = 'fa-instagram';
+                            break;
+                        case 'pinterest':
+                            $icon = 'fa-pinterest';
+                            break;
+                        case 'twitter':
+                            $icon = 'fa-twitter';
+                            break; 
+                        default:
+                            $icon = '';
+                            break;              
+                    }
+                        $msg .= '<div class="social_media_item"><a href="'.$s['link'].'" target="_blank"><i class="fa '.$icon.'" aria-hidden="true"></i></a></div>';
+
+                }
+                $msg .= '';
+            }
+    
+    return $msg;
+}
+
+
+add_shortcode('animated_numbers', 'animated_numbers_func');
+
+function animated_numbers_func($atts)
+{
+    extract(shortcode_atts(array(
+        'id' => '',
+        'start_val' => '',
+        'final_val' => '',
+        'decimals' => '0',
+        'duration' => ''
+    ), $atts));
+
+
+    $msg = '<div id="'.$id.'" class="anim_numbers" data-start="'.$start_val.'"  data-final="'.$final_val.'" data-decimals="'.$decimals.'" data-duration="'.$duration.'" ></div>';
+
+
+    return $msg;
+}
+
+
 
 if (!function_exists('sbp_post_title_breadcrumb')) {
 

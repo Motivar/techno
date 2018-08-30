@@ -9,7 +9,7 @@
 get_header();
 
 $plugin_dir = get_template_directory_uri();
-wp_enqueue_script('krf-shave-js', $plugin_dir . '/js/shave.min.js', array(), false, true);  
+
 ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">

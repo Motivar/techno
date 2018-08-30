@@ -45,22 +45,24 @@ function sticky_it() {
     lastscroll = st;
 }
 
-/*main_event*/
-window.onscroll = function () {
-    if (running == 0) {
-        setTimeout(sticky_it(), 300);
-    }
-}
 
-check_sticky();
 
 function openNav() {
     setTimeout(function () {
         if ($('.js-hamburger.is-active').length > 0) {
             document.getElementById("site-navigation-mobile").style.width = "100%";
+            setTimeout(function () {
+                $('body').addClass('no-scroll');
+            }, 300);
         }
         else {
             document.getElementById("site-navigation-mobile").style.width = "0";
+            $('body').removeClass('no-scroll');
+            if ($('.slick_next').length > 0) {
+                   $('.slick_next').each(function (index) {
+                        $(this).trigger('click');
+                   });
+            }
         }
     }, 350);
 }
@@ -80,9 +82,7 @@ function check_sticky() {
         }
     } else {
         if ($('#masthead.sticky').length == 0) {
-                $('#masthead').addClass('sticky');
+            $('#masthead').addClass('sticky');
         }
     }
-    
 }
-
