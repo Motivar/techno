@@ -36,7 +36,7 @@
 		</div><!-- .site-branding -->
 
 		<nav id="site-navigation" class="main-navigation">
-				<h5><?php echo __('KORYFO', 'koryfo'); ?></h5>
+				<a href="<?php echo get_home_url(); ?>"><h5><?php echo __('KORYFO', 'koryfo'); ?></h5></a>
 		</nav><!-- #site-navigation -->
 
 		<div class="mobile_menu">
@@ -50,9 +50,15 @@
 
 		<nav id="site-navigation-mobile" class="sidenav">
 			<div class="logo_section">
-						<div class="big_logo"><img src="https://koryfo.com/web-assets/uploads/2018/08/logo_color.png" /></div>
+						<div class="big_logo"><a href="<?php echo get_home_url(); ?>"><img src="https://koryfo.com/web-assets/uploads/2018/08/logo_color.png" /></a></div>
 			</div>
-			<div class="widgets_area"><?php dynamic_sidebar('mobile-menu-widgets'); ?></div>
+			<div class="widgets_area">
+						<div class="menu_container">
+										<div class="techno_menu"><?php dynamic_sidebar('menu-widget-1'); ?></div>
+										<div class="techno_menu"><?php dynamic_sidebar('menu-widget-2'); ?></div>
+						</div>
+						<?php dynamic_sidebar('menu-widget-3'); ?>
+			</div>
 		</nav>
 
 		</div>

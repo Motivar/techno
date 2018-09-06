@@ -19,7 +19,7 @@
 						<?php dynamic_sidebar('footer_menu_left'); ?>
 				</div>
 				<div class="footer_logo">
-				 	<img  src="<?php echo site_url();?>/web-assets/uploads/2018/08/logo_koryfo_footer.png"/>
+				 	<a href="<?php echo get_home_url(); ?>"><img  src="<?php echo site_url();?>/web-assets/uploads/2018/08/logo_koryfo_footer.png"/></a>
 				</div>
 				<div class="right_menu">
 						<?php dynamic_sidebar('footer_menu_right'); ?>					

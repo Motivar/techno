@@ -8,7 +8,7 @@
  */
 get_header();
 
-   $id = get_queried_object()->term_id;
+			$id = get_queried_object()->term_id;
 			$data = get_term($id, 'krf_services');
 			$img_id = get_term_meta($id, 'image', true) ?: '';
 			$img = custom_image_element($img_id, 'cover', 0 , 1);
@@ -18,26 +18,35 @@ get_header();
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 
-
-	<div id="service_unit" class="side_msg_section">
+<?php
+if ( count( get_term_children( $id, 'krf_services' ) ) > 0 ) {
+?>
+<div id="services_archive" class="side_msg_section">
 		<div class="main_content_position">
-					<div class="text">
-							<div class="image_container">
-								<div class="image img_gallery">
-										<?php echo $img; ?>
-								</div>
-							</div>
-							<?php echo $description; ?>
-					</div>
-					<?php include('template-parts/photoswipe.php'); ?>
+			<?php 	echo do_shortcode('[services_slider img_show="cover" parent="'.$id.'"]'); ?>
 		</div>
+		<div class="side_msg">
+			<h1><?php echo $data->name; ?></h1>
+		</div>
+</div>
+<?php } 
+
+else { ?>
+	<div id="service_unit" class="side_msg_section content_img_view">
+			<div class="main_content_position">
+					<div class="text">
+						 <div class="image_container">
+									<div class="image img_gallery">
+										<?php echo $img; ?>
+									</div>
+							</div>
+							<?php echo wpautop($description); ?>
+					</div>
+     <?php include('template-parts/photoswipe.php');  ?>
+				</div>
 		<div class="side_msg"><h1><?php echo $data->name; ?></h1></div>
 </div>
-		
-		
-		
-		
-		
+<?php } ?>
 		
 		
 		
@@ -45,6 +54,7 @@ get_header();
 		
 		<?php if ( have_posts() ) :  ?>
 		<div class="related_projects side_msg_section">
+			<div class="main_content_position">
 			<h2><?php echo __('Related Projects', 'techno'); ?></h2>
 
 			<div class="related_projects_container">
@@ -67,6 +77,7 @@ get_header();
 
 						endwhile;
 			?>
+					</div>
 					</div>
 
 		</div>

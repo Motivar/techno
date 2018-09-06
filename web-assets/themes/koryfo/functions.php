@@ -148,15 +148,32 @@ function koryfo_widgets_init()
         'after_title' => '</h2>',
     ));
     register_sidebar(array(
-        'name' => esc_html__('Mobile Menu Widgets', 'techno'),
-        'id' => 'mobile-menu-widgets',
+        'name' => esc_html__('Menu Widget 1', 'techno'),
+        'id' => 'menu-widget-1',
         'description' => esc_html__('Add widgets here.', 'techno'),
         'before_widget' => '<section id="%1$s" class="widget %2$s">',
         'after_widget' => '</section>',
         'before_title' => '<h2 class="widget-title">',
         'after_title' => '</h2>',
     ));
-    
+    register_sidebar(array(
+        'name' => esc_html__('Menu Widget 2', 'techno'),
+        'id' => 'menu-widget-2',
+        'description' => esc_html__('Add widgets here.', 'techno'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ));
+    register_sidebar(array(
+        'name' => esc_html__('Menu Widget 3', 'techno'),
+        'id' => 'menu-widget-3',
+        'description' => esc_html__('Add widgets here.', 'techno'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ));
 }
 add_action('widgets_init', 'koryfo_widgets_init');
 
@@ -256,11 +273,42 @@ function mtv_get_my_custom_posts($post_type)
             'mtv_enable' => 1,
             'en_slg' => 1,
             'tax_types' => array(
-                __('Services', 'koryfo'),
-                __('Service', 'koryfo'),
+                __('Services', 'techno'),
+                __('Service', 'techno'),
                 'krf_services',
             ),
         ),
+        array(
+            'post' => 'krf_real_estate',
+            'sn' => __('Real Estate', 'techno'),
+            'pl' => __('Real Estate', 'techno'),
+            'args' => array(
+                'title',
+                'editor',
+                'thumbnail',
+            ),
+            'slug' => get_option('krf_real_estate_slug') ?: 'krf_real_estate',
+            'chk' => true,
+            'mnp' => 2,
+            'icn' => '',
+            'capp' => array(
+                1,
+                2,
+                3,
+            ),
+            'meta_arrays' => array(
+                //  'sbp_extra_booking_meta'
+            ),
+            'mtv_enable' => 1,
+            'en_slg' => 1,
+            'tax_types' => array(
+                /*
+                __('Services', 'techno'),
+                __('Service', 'techno'),
+                'krf_services',
+                */
+            ),
+        )
     );
     if ($post_type == 'all') {
         $msg = $all;
@@ -579,13 +627,15 @@ function services_slider_func($atts)
     extract(shortcode_atts(array(
         'taxonomy' => 'krf_services',
         'slick' => '1',
-        'img_show' => 'contain'
+        'img_show' => 'contain',
+        'parent' => '0'
     ), $atts));
 
     $services = get_terms(array(
         'taxonomy' => $taxonomy,
         'hide_empty' => false,
         'post_status' => 'publish',
+        'parent' => $parent
     ));
 
     $msg = '
@@ -618,6 +668,48 @@ function services_slider_func($atts)
     return $msg;
 
 }
+add_shortcode('posts_view', 'posts_view_func');
+
+function posts_view_func($atts)
+{
+    extract(shortcode_atts(array(
+        'post_type' => 'post'
+    ), $atts));
+
+    $args = array(
+        'post_type' => $post_type,
+        'posts_per_page' => '-1',
+        'post_status' => 'publish',
+    );
+    $posts = get_posts($args);
+
+    $msg = '<div class="posts_list">';
+
+    foreach ($posts as $post) {
+		$img = get_post_meta($post->ID, '_thumbnail_id', true) ?: '';
+		$image = custom_image_element($img, 'cover');
+        $link = get_permalink($post->ID);
+        
+        $msg .= '
+			    <div class="post_card">
+					<div class="image">
+						<a href="'.$link.'">'.$image.'</a>
+					</div>
+					<div class="text">
+						<div class="title">
+							<a href="'.$link.'"><h2>'.$post->post_title.'</h2></a>
+						</div>
+						<div class="description krf_limit_text" data-height="80" data-original_text="'.strip_tags($post->post_content).'">
+							<h5>'.$post->post_content.'</h5>
+						</div>
+					</div>
+				</div>';
+    }
+    $msg .= '</div>';
+
+    return $msg;
+
+}
 
 add_shortcode('custom_button', 'custom_button_func');
 
@@ -646,6 +738,35 @@ function custom_button_func($atts)
 
 }
 
+add_shortcode('thumbnail_img_element', 'thumbnail_img_element_func');
+
+function thumbnail_img_element_func($atts)
+{
+    extract(shortcode_atts(array(
+        'img_id' => '',
+        'photoswipe' => '0',
+        'include_pswp_code' => '1'
+    ), $atts));
+
+    if (empty($img_id)) {
+        $id = get_the_ID();
+        $img_id = get_post_meta($id, '_thumbnail_id', true) ?: '';
+
+    }
+
+    $msg = custom_image_element($img_id, 'cover', 0, $photoswipe);
+
+    if ($include_pswp_code == 1 ) {
+        if (!is_admin()){
+          include('template-parts/photoswipe.php'); 
+        }
+    }
+
+    return $msg;
+
+}
+
+
 add_shortcode('projects_map', 'projects_map_function');
 
 function projects_map_function($atts)
@@ -667,19 +788,24 @@ function projects_map_function($atts)
         $id = $p->ID;
         $title = $p->post_title;
         $content = $p->post_content;
-        $coordinates = get_post_meta($id, 'map_location', true);
-        $latitude = $coordinates['lat'];
-        $longtitude = $coordinates['lng'];
-        $permalink = get_permalink($id);
+        $coordinates = get_post_meta($id, 'map_location', true) ?: array();
+        $map_text = get_post_meta($id, 'map_text', true) ?: '';
+        if (!empty($coordinates)) {
+            $latitude = $coordinates['lat'];
+            $longtitude = $coordinates['lng'];
+            $permalink = get_permalink($id);
 
-        $project_array = array(
-            'title' => $title,
-            'lat' => $latitude,
-            'lng' => $longtitude,
-            'link' => $permalink,
-        );
+            $project_array = array(
+                'title'=> $title,
+                'lat'  => $latitude,
+                'lng'  => $longtitude,
+                'link' => $permalink,
+                'text' => wpautop($map_text)
+            );
 
-        $projects_array[] = $project_array;
+            $projects_array[] = $project_array;
+        }
+
     }
     //print_r($projects_array);
     $projects = json_encode($projects_array);

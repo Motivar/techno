@@ -27,19 +27,20 @@ $plugin_dir = get_template_directory_uri();
 			while ( have_posts() ) :
 
 			$count = $count + 1;
-			if ($count > 3) {
-				$count = 0;
-				if ($reverse == 0) {
-					$reverse = 1;
-				}
-				else {
-					$reverse = 0;
-				}
+
+			if (is_int($count/4)) {
+					$count = 1;
+					if ($reverse == 0) {
+						$reverse = 1;
+					}
+					else {
+						$reverse = 0;
+					}
 			}
 
 			switch ($reverse) {
 				case '0':
-					if ($count == 2) {
+					if ($count == 3) {
 							$cls = 'wide';
 					}
 					else {
@@ -47,7 +48,7 @@ $plugin_dir = get_template_directory_uri();
 					}
 					break;
 				case '1':
-					if ($count == 0) {
+					if ($count == 1) {
 							$cls = 'wide';
 					}
 					else {
@@ -74,7 +75,7 @@ $plugin_dir = get_template_directory_uri();
 											<div class="title">
 													<a href="<?php echo $link; ?>"><h2><?php echo $title; ?></h2></a>
 											</div>
-											<div class="description krf_limit_text" data-height="80" data-original_text="<?php echo $description; ?>">
+											<div class="description krf_limit_text" data-height="80" data-original_text="<?php echo strip_tags($description); ?>">
 														<h5><?php echo $description; ?></h5>
 											</div>
 									</div>
@@ -89,7 +90,7 @@ $plugin_dir = get_template_directory_uri();
 			</div>
 		</div>
 		<div class="side_msg">
-			<a href="#"><h1>PROJECTS</h1></a>
+			<h1><?php echo __('PROJECTS', 'techno'); ?></h1>
 		</div>
 </div>
 

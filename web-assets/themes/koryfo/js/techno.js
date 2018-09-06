@@ -1,7 +1,8 @@
 (function ($) {
  "use strict";
- var items, numAnim;
- var swidth = 0;
+var items, numAnim;
+var swidth = 0;
+var boxList = [];
 var options = {
   useEasing: true,
   useGrouping: true,
@@ -14,9 +15,9 @@ var options = {
   $(window).resize(function () {
    myresize();
   });
-  Barba.Dispatcher.on('newPageReady', function () { /*uncomment this to remove barba*/
+ // Barba.Dispatcher.on('newPageReady', function () { /*uncomment this to remove barba*/
    check_sticky();
-
+   openNav();
 
 /*main_event*/
 window.onscroll = function () {
@@ -24,8 +25,6 @@ window.onscroll = function () {
     setTimeout(sticky_it(), 300);
   }
 }
-
-
 
    items = [];
    myresize();
@@ -64,7 +63,6 @@ window.onscroll = function () {
 
    setTimeout(function () {
     if ($('.img_gallery').length > 0) {
-           console.log('2');
 
      slider_slick('.img_gallery');
      var photoSwipe = $(".pswp").html();
@@ -141,7 +139,7 @@ window.onscroll = function () {
      };
 
      $(document).on('click', '.img_gallery [data-sbp_pswp]', function () {
-      //openPhotoSwipe($(this).attr('src'));
+        openPhotoSwipe($(this).attr('src'));
      });
     }
      if ($('.projects_slider .slider-for').length > 0) {
@@ -199,8 +197,8 @@ window.onscroll = function () {
          vertical: false,
          dots: false,
          centerPadding: '60px',
-         autoplay: false,
-      //   autoplaySpeed: 5000
+         autoplay: true,
+         autoplaySpeed: 2500
        });
      }
     if ($('.partners_carousel').length > 0) {
@@ -215,13 +213,7 @@ window.onscroll = function () {
       }, 1000);
      }
     }
-
-
-
-
    }, 1000);
-
-
 
 
    if ($('.hamburger').length > 0) {
@@ -243,11 +235,11 @@ setTimeout(function () {
    
 
 
-  });  /*remove this to remove bara*/
+//  });  /*remove this to remove bara
 
 
   /*start removing for barba*/
-  /*initialize barba*/
+  /*initialize barba*//*
   Barba.Pjax.start();
   Barba.Prefetch.init();
 
@@ -261,6 +253,7 @@ setTimeout(function () {
        */
 
       // As soon the loading is finished and the old page is faded out, let's fade the new page
+      /*
       Promise
         .all([this.newContainerLoading, this.fadeOut()])
         .then(this.fadeIn.bind(this));
@@ -278,7 +271,7 @@ setTimeout(function () {
        * At this stage newContainer is on the DOM (inside our #barba-container and with visibility: hidden)
        * Please note, newContainer is available just after newContainerLoading is resolved!
        */
-
+/*
       $(window).scrollTop(0);
       var _this = this;
       var $el = $(this.newContainer);
@@ -297,7 +290,7 @@ setTimeout(function () {
          * Do not forget to call .done() as soon your transition is finished!
          * .done() will automatically remove from the DOM the old Container
          */
-
+/*
         _this.done();
       });
     }
@@ -306,13 +299,13 @@ setTimeout(function () {
   /**
    * Next step, you have to tell Barba to use the new Transition
    */
-
+/*
   Barba.Pjax.getTransition = function () {
     /**
      * Here you can use your own logic!
      * For example you can use different Transition based on the current page or link...
      */
-
+/*
     return FadeTransition;
   };
 
@@ -323,7 +316,6 @@ setTimeout(function () {
  function google_map_initialize() {
   var coordinates_string = $('.coordinates').text();
   var markers = JSON.parse(coordinates_string);
-
   var map;
   var bounds = new google.maps.LatLngBounds();
   var mapOptions = {
@@ -375,33 +367,42 @@ setTimeout(function () {
   map.setTilt(45);
 
   // Display multiple markers on a map
-  var infoWindow = new google.maps.InfoWindow(),
-   marker, i;
+  var marker, i;
   // Loop through our array of markers & place each one on the map
 
   for (i = 0; i < markers.length; i++) {
    var position = new google.maps.LatLng(markers[i]['lat'], markers[i]['lng']);
    bounds.extend(position);
+    var contentString = '<div id="content"><div class="title"><h5>' + markers[i]['title'] + '</h5></div>' + markers[i]['text'] + '</div>';
+    var infowindow = new google.maps.InfoWindow();
    marker = new google.maps.Marker({
     position: position,
     map: map,
     icon: techno_site + '/web-assets/uploads/2018/08/MAP-e1534418839593.png',
-    title: 'koryfo',
+    title: 'techno',
    });
-
    // Automatically center the map fitting all markers on the screen
-   map.fitBounds(bounds);
+
+    google.maps.event.addListener(marker, 'click', (function (marker, contentString, infowindow) {
+        return function () {
+          infowindow.setContent(contentString);
+          infowindow.open(map, marker);
+        };
+    })(marker, contentString, infowindow));
+
 
   }
+   map.fitBounds(bounds);
+
  }
+
+
 
  function slider_slick(element) {
   if ($(element).length > 0) {
    var columns = $(element).data('columns');
    var mcolumns = $(element).data('mcolumns');
    var scolumns = $(element).data('scolumns');
-   console.log(element);
-   console.log(columns);
 
    $(element).not('.slick-initialized').slick({
     nextArrow: '',
@@ -599,3 +600,4 @@ Barba.Pjax.getTransition = function () {
 
 
 */
+

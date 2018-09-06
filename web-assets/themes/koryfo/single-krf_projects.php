@@ -33,7 +33,7 @@ $plugin_dir = get_template_directory_uri(__FILE__);
        if (!empty($gallery)) { ?>
         <div class="img_gallery" data-columns="1" data-mcolumns="1" data-scolumns="1">
         <?php foreach ($gallery as $img_id) {
-           $img = custom_image_element($img_id, 'cover', 0 , 1); ?>
+           $img = custom_image_element($img_id, 'cover', 0 , 1, 'large'); ?>
            <div class="gallery_img_wrapper"><?php echo $img; ?></div>
            <?php
         } ?>
@@ -45,7 +45,7 @@ $plugin_dir = get_template_directory_uri(__FILE__);
 			       
 		    </div>
       <div class="side_msg">
-       <a href="#"><h1><?php echo get_the_title(); ?></h1></a>
+       <h1><?php echo get_the_title(); ?></h1>
       </div>
    </div>
 
@@ -58,12 +58,12 @@ $plugin_dir = get_template_directory_uri(__FILE__);
   <div id="project_desc" class="side_msg_section">
    <div class="main_content_position">
      <div id="project_see_more" class="width_50">
-              <div class="before_icon"><h2><?php echo __('SEE ALSO', 'koryfo'); ?></h2></div>
+              <div class="before_icon"><h2><?php echo __('SEE ALSO', 'techno'); ?></h2></div>
               <div class="next_project"><a href="<?php echo $next->guid; ?>"><h3><?php echo $next->post_title ;?></h3></a></div>
    </div>
    <div id="project_text" class="width_50">
      <?php the_content(); 
-     echo do_shortcode('[custom_button title="'.__('Contact us', 'koryfo').'"] ');
+     echo do_shortcode('[custom_button title="'.__('Contact us', 'techno').'" post_id="344"] ');
      ?>
    </div>
   </div>

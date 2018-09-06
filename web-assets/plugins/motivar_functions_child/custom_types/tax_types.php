@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 add_action( 'init', 'my_bsn_register_my_taxes' );
 function my_bsn_register_my_taxes() {
-$actions=array(array('Partners','Partner','krf_partners',array('krf_projects')));
+$actions=array(array('Partners','Partner','krf_partners',array('krf_projects')), array('Categories','Category','krf_project_cat',array('krf_projects')));
 
 foreach ($actions as $i)
 {
