@@ -7,9 +7,17 @@
  * @package koryfo
  */
 get_header();
-
+			
 			$id = get_queried_object()->term_id;
 			$data = get_term($id, 'krf_services');
+
+			$next = techno_get_term( $id, 'krf_services', 'next');
+			if (empty($next)) {
+						$next = techno_get_term( $id, 'krf_services', 'previous');
+			}
+			$next_link = get_term_link($next['id']);
+
+
 			$img_id = get_term_meta($id, 'image', true) ?: '';
 			$img = custom_image_element($img_id, 'cover', 0 , 1);
 			$description = get_term_meta($id, 'custom_description', true) ?: ''; 
@@ -40,15 +48,20 @@ else { ?>
 										<?php echo $img; ?>
 									</div>
 							</div>
-							<?php echo wpautop($description); ?>
+							<?php 
+							if (!empty($description)) {
+										echo wpautop($description);
+							}
+							else {
+									echo __('More info to come soon.','techno');
+							}
+							?>
 					</div>
      <?php include('template-parts/photoswipe.php');  ?>
 				</div>
 		<div class="side_msg"><h1><?php echo $data->name; ?></h1></div>
 </div>
 <?php } ?>
-		
-		
 		
 		
 		
@@ -82,15 +95,27 @@ else { ?>
 
 		</div>
 
-
-
 		<?php
-
-			the_posts_navigation();
 
 		endif;
 
 		?>
+		<div id="project_desc"  class="side_msg_section">
+					<div class="main_content_position flex_2">
+							<div class="width_50">
+										<div id="project_see_more" class="width_50">
+																			<div class="before_icon"><h2><?php echo __('SEE ALSO', 'techno'); ?></h2></div>
+																			<div class="next_project"><a href="<?php echo $next_link; ?>"><h3><?php echo $next['name'] ;?></h3></a></div>
+								</div>
+							</div>
+							<div class="width_50">
+									<?php      
+									echo do_shortcode('[custom_button title="'.__('Contact us', 'techno').'" post_id="344"] ');
+									?>
+							</div>
+					</div>
+					<div class="side_msg"></div>
+		</div>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->

@@ -62,7 +62,13 @@ $plugin_dir = get_template_directory_uri(__FILE__);
               <div class="next_project"><a href="<?php echo $next->guid; ?>"><h3><?php echo $next->post_title ;?></h3></a></div>
    </div>
    <div id="project_text" class="width_50">
-     <?php the_content(); 
+     <?php  
+     if (!empty(get_the_content())) {
+        the_content();
+     }
+     else {
+       echo __('More info to come soon.','techno');
+     }
      echo do_shortcode('[custom_button title="'.__('Contact us', 'techno').'" post_id="344"] ');
      ?>
    </div>

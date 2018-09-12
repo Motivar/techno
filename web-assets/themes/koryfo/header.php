@@ -36,7 +36,7 @@
 		</div><!-- .site-branding -->
 
 		<nav id="site-navigation" class="main-navigation">
-				<a href="<?php echo get_home_url(); ?>"><h5><?php echo __('KORYFO', 'koryfo'); ?></h5></a>
+				<a href="<?php echo get_home_url(); ?>"><h4><?php echo __('KORYFO', 'koryfo'); ?></h4></a>
 		</nav><!-- #site-navigation -->
 
 		<div class="mobile_menu">

@@ -152,8 +152,8 @@ window.onscroll = function () {
      });
 
        $('.projects_slider .slider-nav').slick({
-      nextArrow: '<img class="slick_next" src="' + techno_site + '/web-assets/uploads/2018/08/arrow.png" />',
-      prevArrow: '<img class="slick_prev" src="' + techno_site + '/web-assets/uploads/2018/08/arrow.png" />',
+      nextArrow: '<i class="slick_next  fa fa-angle-right slick-left" ></i>',
+      prevArrow: '<i class="slick_prev fa fa-angle-left slick-right"></i>',
       slidesToShow: 5,
       slidesToScroll: 1,
          asNavFor: '.projects_slider .slider-for',
@@ -186,8 +186,8 @@ window.onscroll = function () {
        });
 
        $('.services_slider .slider-nav').slick({
-         nextArrow: '<img class="slick_next" src="' + techno_site + '/web-assets/uploads/2018/08/arrow.png" />',
-         prevArrow: '<img class="slick_prev" src="' + techno_site + '/web-assets/uploads/2018/08/arrow.png" />',
+         nextArrow: '<i class="slick_next  fa fa-angle-right slick-left" ></i>',
+         prevArrow: '<i class="slick_prev fa fa-angle-left slick-right"></i>',
          slidesToShow: 1,
          slidesToScroll: 1,
          asNavFor: '.services_slider .slider-for',
@@ -405,8 +405,8 @@ setTimeout(function () {
    var scolumns = $(element).data('scolumns');
 
    $(element).not('.slick-initialized').slick({
-    nextArrow: '',
-    prevArrow: '',
+    nextArrow: '<i class="slick_next  fa fa-angle-right slick-left" ></i>',
+    prevArrow: '<i class="slick_prev fa fa-angle-left slick-right"></i>',
     slidesToShow: columns,
     dots: false,
     speed: 400,

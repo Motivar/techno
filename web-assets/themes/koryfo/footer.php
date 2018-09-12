@@ -26,15 +26,7 @@
 				</div>
 		</div>
 		<div class="site-info" style="text-align:center;margin-top:20px;">
-				<?php
-				/* translators: %s: CMS name, i.e. WordPress. */
-				echo __('KORYFO 2018','koryfo');
-				?>
-			<span class="sep"> | </span>
-				<?php
-				/* translators: 1: Theme name, 2: Theme author. */
-				printf( esc_html__( 'Theme: %1$s by %2$s.', 'koryfo' ), 'koryfo', '<a href="http://motivar.io/">Motivar.io</a>' );
-				?>
+			<?php echo  do_shortcode('[motivar_footer company="'.__('Koryfo', 'techno').'"]'); ?>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->

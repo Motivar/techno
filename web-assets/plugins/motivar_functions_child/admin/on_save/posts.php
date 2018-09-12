@@ -12,12 +12,6 @@ function motivar_functions_save_acf( $post_id ) {
 	 	$changes=$types=array();
 	 	/*for changes in slug motivar_functions_slugify */
 	 	switch ($post_typee) {
-	 		case 'mr_contacts':
-				$surname = get_post_meta($post_id,'client_surname',true);
-				$name = get_post_meta($post_id, 'client_name', true);
-				$changes['post_title'] = ucfirst($surname).' '.ucfirst($name);
-				$types=array('%s'); 			
-                break;
 	 		default:
 	 			break;
 	 	}
@@ -47,28 +41,38 @@ function motivar_functions_save_acf( $post_id ) {
 }
 
 
-/*
+
 add_action('save_post', 'custom_posts_gnnpls',10,3);
 
 function custom_posts_gnnpls($post_id,$post,$out)
 {
  if ((!wp_is_post_revision($post_id) && 'auto-draft' != get_post_status($post_id) && 'trash' != get_post_status($post_id)))
 	 {
-	 	$post_typee=get_post_type($post_id);
-	 	if ($post_typee=='page' || $post_typee=='portfolio' || $post_typee=='post')
-	 		{
-	 		$title=get_the_title($post_id);
-	 		update_post_meta($post_id,'be_themes_hero_section_content','<h1>'.$title.'</h1>');
-			if ($post_typee=='post')
-				{
-				default_page_meta($post_id);
-				}
-
-	 		}
+			$post_typee=get_post_type($post_id);
+			$post = get_post($post_id);
+					switch ($post_typee) {
+				case 'krf_projects':
+						/*
+						if (empty($post->post_content)) {
+							  $my_post = array(
+										'ID'           => $post_id,
+										'post_content' => 'This is the updated content.',
+									);
+ 
+								// Update the post into the database
+										wp_update_post( $my_post );
+						}
+						*/
+        break;
+						
+						default:
+							# code...
+							break;
+					}
 	}
 
 }
-*/
+
 
 /*on delete posts*/
 /*

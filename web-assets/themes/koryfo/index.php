@@ -13,36 +13,57 @@
  */
 
 get_header();
-?>
+$path = get_stylesheet_directory();
 
+?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
 
+		<?php if ( have_posts() ) : 			?>
+		<div id="archive_posts" class="side_msg_section">
+					<div class="main_content_position">
+			
+		<div class="posts_list">
 		<?php
-		if ( have_posts() ) :
-
-			if ( is_home() && ! is_front_page() ) :
-				?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
-				<?php
-			endif;
+				while ( have_posts() ) :
 
 			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
 
-				/*
-				 * Include the Post-Type-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_type() );
+				the_post();
+				$img = get_post_meta(get_the_ID(), '_thumbnail_id', true) ?: '';
+				$image = custom_image_element($img, 'cover');
+				$description = get_the_content();
+				$title = get_the_title();
+				$link = get_permalink(get_the_ID());
+				?>
+									<div class="post_card">
+											<div class="image">
+														<a href="<?php echo $link; ?>"><?php echo $image; ?></a>
+											</div>
+											<div class="text">
+															<div class="title">
+																	<a href="<?php echo $link; ?>"><h2><?php echo $title; ?></h2></a>
+															</div>
+															<div class="description krf_limit_text" data-height="80" data-original_text="<?php echo strip_tags($description); ?>">
+																		<h5><?php echo $description; ?></h5>
+															</div>
+											</div>
+									</div>
+				<?php
 
 			endwhile;
 
-			the_posts_navigation();
+			?>  
+			</div>
+		</div>
+		<div class="side_msg">
+			<h1><?php echo __('News & Events', 'techno'); ?></h1>
+		</div>
+</div>
+
+			<?php
+		//	the_posts_navigation();
+			include($path.'/template-parts/pagination.php');
 
 		else :
 
@@ -55,5 +76,4 @@ get_header();
 	</div><!-- #primary -->
 
 <?php
-get_sidebar();
 get_footer();

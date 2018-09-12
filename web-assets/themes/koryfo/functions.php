@@ -174,6 +174,15 @@ function koryfo_widgets_init()
         'before_title' => '<h2 class="widget-title">',
         'after_title' => '</h2>',
     ));
+    register_sidebar(array(
+        'name' => esc_html__('404-Content', 'techno'),
+        'id' => '404-content',
+        'description' => esc_html__('Add widgets here.', 'techno'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+    ));
 }
 add_action('widgets_init', 'koryfo_widgets_init');
 
@@ -820,7 +829,7 @@ add_shortcode('project_services', 'project_services_func');
 function project_services_func($atts)
 {
     extract(shortcode_atts(array(
-        'number' => '4',
+        'number' => '5',
     ), $atts));
 
     $services = get_terms(array(
@@ -1093,4 +1102,61 @@ function sbp_breadcrumbs()
     }
     return $msg;
 
+}
+
+function techno_get_term($id, $taxonomy, $sequence)  {
+    $terms = get_terms($taxonomy, array(
+    'hide_empty' => false,
+    )) ?: array();
+
+    $all_terms  = array();
+    foreach ($terms as $term) {
+        $all_terms[][$term->term_id] = $term->name;
+    }
+
+    foreach ($all_terms as $key => $term_details) {
+        
+        if (array_key_exists(intval($id), $term_details))
+        {
+            $previous_key = $key - 1 ;
+            $next_key = $key + 1;
+            switch ($sequence) {
+                case 'next':
+                    if (array_key_exists($next_key, $all_terms)) {
+                        foreach ($all_terms[$next_key] as $keyy => $value) {
+                            $msg = array('id' => $keyy, 'name' => $value);
+                        }
+                    }
+                    else {
+                        $msg = array();
+                    }
+                    break;
+                case 'previous':
+                    if (array_key_exists($previous_key, $all_terms)) {
+                        foreach ($all_terms[$next_key] as $keyy => $value) {
+                            $msg = array('id' => $keyy, 'name' => $value);
+                        }
+                    }
+                    else {
+                        $msg = array();
+                    }
+                    break;
+            }
+        }
+    }
+
+    return $msg;
+    
+}
+
+function posts_auto_description_func( $desc, $post_id, $post_type, $taxonomy) {
+		$terms = get_the_terms( $post->ID,'sbp_map_point_category');
+    if($post->post_type=='sbp_map_points' && (empty($desc['description']))){
+        return __('If you are planning vacation in Corfu and you are looking for the best places for you
+            and you are not sure what choose, then '.$post->post_title.' is the right place. 
+            '.$post->post_title.',where it is located in '.$terms[0]->name.', is characterized
+						by its beautiful beaches and  its picturesque taverns. Chondrogiannis tours can guarantee 
+						that will transfer you with comfort and safety in '.$post->post_title.' or wherever you like 
+						in our beautiful island. Do not miss a minute!Βοοκ now!','motivar');
+    }
 }

@@ -11,7 +11,6 @@
 
 <section class="no-results not-found">
 	<header class="page-header">
-		<h1 class="page-title"><?php esc_html_e( 'Nothing Found', 'koryfo' ); ?></h1>
 	</header><!-- .page-header -->
 
 	<div class="page-content">
@@ -40,10 +39,15 @@
 
 		else :
 			?>
-
-			<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'koryfo' ); ?></p>
+		<div class="side_msg_section">
+					<div class="main_content_position">
+							<p><?php echo __('There are no related posts right now. More info will come soon.', 'techno'); ?></p>
+					</div>
+					<div class="side_msg"><h1><?php echo __('Nothing Found', 'techno');  ?></h1></div>
+		</div>
+			
 			<?php
-			get_search_form();
+		//	get_search_form();
 
 		endif;
 		?>
