@@ -373,7 +373,13 @@ setTimeout(function () {
   for (i = 0; i < markers.length; i++) {
    var position = new google.maps.LatLng(markers[i]['lat'], markers[i]['lng']);
    bounds.extend(position);
-    var contentString = '<div id="content"><div class="title"><h5>' + markers[i]['title'] + '</h5></div>' + markers[i]['text'] + '</div>';
+   if (markers[i]['link'] === '') {
+     var project_title = '<h5>' + markers[i]['title'] + '</h5>';
+   }
+   else {
+     var project_title = '<a href="'+ markers[i]['link'] +'" class="link_color_1"><h5>' + markers[i]['title'] + '</h5></a>';
+   }
+    var contentString = '<div id="point_content"><div class="title">'+ project_title +'</div>' + markers[i]['text'] + '</div>';
     var infowindow = new google.maps.InfoWindow();
    marker = new google.maps.Marker({
     position: position,

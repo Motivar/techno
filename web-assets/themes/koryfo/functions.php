@@ -616,7 +616,7 @@ function projects_slider_func($atts)
         <div class="title_section">
             <div class="slider-nav">';
     foreach ($posts as $post) {
-        $msg .= '<div class="slider_title_container"><h3>' . $post->post_title . '</h3></div>';
+        $msg .= '<div class="slider_title_container"><h3><a href="'.$link.'">' . $post->post_title . '</a></h3></div>';
     }
     $msg .=
         '</div>
@@ -788,7 +788,7 @@ function projects_map_function($atts)
     $args = array(
         'post_type' => 'krf_projects',
         'posts_per_page' => '-1',
-        'post_status' => 'publish',
+        'post_status' => array('publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit'),
         'field' => 'id',
     );
     $posts = get_posts($args);
@@ -802,7 +802,13 @@ function projects_map_function($atts)
         if (!empty($coordinates)) {
             $latitude = $coordinates['lat'];
             $longtitude = $coordinates['lng'];
-            $permalink = get_permalink($id);
+            if ($p->post_status == 'publish') {
+                $permalink = get_permalink($id);
+            }
+            else {
+                $permalink = '';
+            }
+            
 
             $project_array = array(
                 'title'=> $title,

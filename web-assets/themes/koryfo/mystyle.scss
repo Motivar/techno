@@ -173,6 +173,16 @@ a {
  }
 }
 
+.custom_button_wrap {
+ .custom_button {
+   a {
+     h2,h3,h4,h5 {
+      float: left;
+     }
+   }
+ }
+}
+
 .slick-slide:focus {
  outline: none !important;
 }
@@ -215,9 +225,8 @@ a {
  #site-navigation {
   width: 60%;
   text-align: center; // display: none;
-  h4 {
-   margin: auto;
-   color: $light-color;
+  img {
+   max-width: 120px !important;
   }
  }
  .mobile_menu {
@@ -371,13 +380,18 @@ a {
      margin: 0;
      font-size: 1.8rem !important;
      letter-spacing: 2px;
-     @media (min-width: 1000px) {
-      font-size: 2.1rem !important;
+     a {
+      text-decoration: none;
+      color: $standard-color;
+      pointer-events: none;
      }
     }
     &.slick-current {
      h3 {
-      color: $highlight-color;
+      a {
+       color: $highlight-color;
+       pointer-events: initial;
+      }
      }
     }
    }
@@ -388,8 +402,7 @@ a {
 img {
  &.cover {
   min-height: 100%;
-  min-width: 100%;
-  max-width: none !important;
+  min-width: 100%; // max-width: none !important;
   width: auto;
   height: auto;
   max-height: none;
@@ -462,11 +475,13 @@ img {
   right: 0;
   top: 45%;
   font-size: 40px;
+  z-index: 5;
  }
  .slick_prev {
   position: absolute;
   left: 0;
   top: 45%;
+  z-index: 5;
   font-size: 40px;
  }
 }
@@ -543,78 +558,18 @@ img {
     display: flex;
     align-items: center;
     #rev_logo {
-     margin-right: 30px !important;
-     img {
-      max-width: 70px !important;
-      height: auto !important;
-      -webkit-transform: rotate(90deg);
-      transform: rotate(90deg);
-     }
+      display: none;
     }
     .rev_text {
-     h1 {
-      font-size: 6rem !important;
-      margin: 0 !important;
-      @media (max-width: 550px) {
-       font-size: 3rem !important;
+      img {
+        width: 500px !important;
+        height: auto !important;
       }
-     }
     }
    }
   }
  }
 }
-
-/*
-#slider_logo {
- @media (max-width: 749px) {
-  top: 0 !important;
-  left: 0 !important;
-  width: 100%;
-  height: 100%;
-  .tp-loop-wrap {
-   width: 100%;
-   height: 100%;
-   .tp-mask-wrap {
-    width: 100%;
-    height: 100%;
-    .tp-caption {
-     width: 100%;
-     height: 100%;
-    }
-   }
-  }
- }
- #rev_logo {
-  img {
-   max-width: 70px !important;
-   height: auto !important;
-   position: absolute;
-   @media (max-width: 749px) {
-    top: 70px !important;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-   }
-   @media (min-width: 750px) {
-    top: 230px;
-    left: 60px;
-   }
-   @media (min-width: 900px) {
-    top: 350px;
-    left: 65px;
-   }
-   @media (min-width: 1000px) {
-    top: 450px;
-   }
-   @media (min-width: 1200px) {
-    left: 85px;
-    top: 480px;
-   }
-  }
- }
-}
-*/
 
 #rev_menu {
  ul {
@@ -625,6 +580,9 @@ img {
     font-size: 1.9rem !important;
     text-decoration: none;
     color: $light-color;
+    &.scr_4_more {
+      font-size: 1rem !important;
+    }
     &:hover {
      color: $highlight-color;
     }
@@ -652,7 +610,7 @@ img {
 }
 
 .site-footer {
- margin-top: 90px;
+ margin-top: 50px;
  background: $secondary-color;
  padding: 50px 0;
  .footer_menu {
@@ -743,7 +701,13 @@ body.home {
     position: relative;
     height: 100%;
     overflow: hidden;
-    img {}
+    background: $light-color;
+    img {
+      opacity: 0.5;
+      &:hover {
+        opacity: 1;
+      }
+    }
    }
   }
  }
@@ -778,9 +742,13 @@ body.home {
 #project_gallery {
  .main_content_position {
   max-width: 1000px;
+  background: $light-color;
   .img_gallery {
    img {
+    opacity: 0.5;
+    @extend .trans;
     &:hover {
+     opacity: 1;
      cursor: pointer;
      cursor: hand;
     }
@@ -789,13 +757,13 @@ body.home {
     position: absolute;
     top: 50%;
     left: 5px;
-    z-index: 10;
+    z-index: 5;
    }
    .slick_next {
     position: absolute;
     top: 50%;
     right: 5px;
-    z-index: 10;
+    z-index: 5;
    }
    @media (min-width: 1000px) {
     .slick_prev {
@@ -810,6 +778,7 @@ body.home {
 }
 
 #project_info {
+ margin-top: 70px !important;
  .main_content_position {
   display: -webkit-flex;
   display: flex;
@@ -838,6 +807,7 @@ body.home {
 }
 
 #project_desc {
+ margin-top: 70px !important;
  .main_content_position {
   display: -webkit-flex;
   display: flex;
@@ -864,6 +834,7 @@ body.home {
       }
       h3 {
        margin: 0;
+       float: left;
       }
      }
     }
