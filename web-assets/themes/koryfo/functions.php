@@ -317,6 +317,37 @@ function mtv_get_my_custom_posts($post_type)
                 'krf_services',
                 */
             ),
+        ),
+        array(
+            'post' => 'krf_services',
+            'sn' => __('Real Estate', 'techno'),
+            'pl' => __('Real Estate', 'techno'),
+            'args' => array(
+                'title',
+                'editor',
+                'thumbnail',
+            ),
+            'slug' => get_option('krf_services_slug') ?: 'krf_services',
+            'chk' => true,
+            'mnp' => 2,
+            'icn' => '',
+            'capp' => array(
+                1,
+                2,
+                3,
+            ),
+            'meta_arrays' => array(
+                //  'sbp_extra_booking_meta'
+            ),
+            'mtv_enable' => 1,
+            'en_slg' => 1,
+            'tax_types' => array(
+                /*
+                __('Services', 'techno'),
+                __('Service', 'techno'),
+                'krf_services',
+                */
+            ),
         )
     );
     if ($post_type == 'all') {
