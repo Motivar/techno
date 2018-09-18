@@ -663,6 +663,7 @@ function services_slider_func($atts)
         <div class="title_section">
             <div class="slider-nav">';
     foreach ($services as $service) {
+        $link = get_term_link($service->term_id);
         $msg .= '<div class="slider_title_container"><a href="'.$link.'"><h3>' . $service->name . '</h3></a></div>';
     }
     $msg .=
@@ -1128,7 +1129,7 @@ function techno_get_term($id, $taxonomy, $sequence)  {
             $next_key = $key + 1;
             switch ($sequence) {
                 case 'next':
-                    if (array_key_exists($next_key, $all_terms)) {
+                    if (array_key_exists($next_key, $all_terms) && term_exists($next_key)) {
                         foreach ($all_terms[$next_key] as $keyy => $value) {
                             $msg = array('id' => $keyy, 'name' => $value);
                         }
@@ -1138,8 +1139,8 @@ function techno_get_term($id, $taxonomy, $sequence)  {
                     }
                     break;
                 case 'previous':
-                    if (array_key_exists($previous_key, $all_terms)) {
-                        foreach ($all_terms[$next_key] as $keyy => $value) {
+                    if (array_key_exists($previous_key, $all_terms) && term_exists($previous_key)) {
+                        foreach ($all_terms[$previous_key] as $keyy => $value) {
                             $msg = array('id' => $keyy, 'name' => $value);
                         }
                     }

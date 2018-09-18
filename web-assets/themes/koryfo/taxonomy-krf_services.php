@@ -11,13 +11,12 @@ get_header();
 			$id = get_queried_object()->term_id;
 			$data = get_term($id, 'krf_services');
 
-			$next = techno_get_term( $id, 'krf_services', 'next');
+			$next = techno_get_term( $id, 'krf_services', 'next') ?: '';
 			if (empty($next)) {
 						$next = techno_get_term( $id, 'krf_services', 'previous');
 			}
 			$next_link = get_term_link($next['id']);
-
-
+ 
 			$img_id = get_term_meta($id, 'image', true) ?: '';
 			$img = custom_image_element($img_id, 'cover', 0 , 1);
 			$description = get_term_meta($id, 'custom_description', true) ?: ''; 

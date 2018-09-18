@@ -163,7 +163,7 @@ window.onscroll = function () {
       vertical: true,
       dots: false,
       autoplay: true,
-      autoplaySpeed: 2000,
+      autoplaySpeed: 4000,
       responsive: [{
        breakpoint: 750,
        settings: {
@@ -198,7 +198,7 @@ window.onscroll = function () {
          dots: false,
          centerPadding: '60px',
          autoplay: true,
-         autoplaySpeed: 2500
+         autoplaySpeed: 4000
        });
      }
     if ($('.partners_carousel').length > 0) {
