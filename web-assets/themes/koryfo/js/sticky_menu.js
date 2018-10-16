@@ -51,9 +51,9 @@ function openNav() {
     setTimeout(function () {
         if ($('.js-hamburger.is-active').length > 0) {
             document.getElementById("site-navigation-mobile").style.width = "100%";
-            setTimeout(function () {
+            //setTimeout(function () {
                 $('body').addClass('no-scroll');
-            }, 300);
+          //  }, 300);
         }
         else {
             document.getElementById("site-navigation-mobile").style.width = "0";
@@ -70,12 +70,12 @@ function openNav() {
 function check_sticky() {
     if ($('body.home').length > 0) {
         if ($(window).scrollTop() > $(window).height()) {
-            $('#masthead').show();
+          //  $('#masthead').show();
             if ($('#masthead.sticky').length == 0) {
                 $('#masthead').addClass('sticky');
             }
         } else {
-            $('#masthead').hide();
+           // $('#masthead').hide();
             if ($('#masthead.sticky').length > 0) {
                 $('#masthead').removeClass('sticky');
             }

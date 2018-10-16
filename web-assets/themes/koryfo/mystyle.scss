@@ -870,6 +870,10 @@ body.home {
  }
  &:not(.sticky) {
   position: absolute;
+  #site-navigation,
+  .site-branding {
+    visibility: hidden;
+  }
  }
  &.sticky {
   position: fixed;
@@ -893,7 +897,7 @@ body.home {
    /* Black*/
    overflow-x: hidden;
    /* Disable horizontal scroll */
-   transition: 0.5s;
+  // transition: 0.5s;
    /* 0.5 second transition effect to slide in the sidenav */
    //display: none;
    display: flex;
@@ -993,8 +997,9 @@ body.home {
 }
 
 body.no-scroll {
- #masthead.sticky {
+ #masthead {
   background: $standard-color;
+  transition: 0.5s;
  }
 }
 
