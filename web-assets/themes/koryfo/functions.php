@@ -616,7 +616,11 @@ function projects_slider_func($atts)
         <div class="title_section">
             <div class="slider-nav">';
     foreach ($posts as $post) {
-        $msg .= '<div class="slider_title_container"><h3><a href="'.$link.'">' . $post->post_title . '</a></h3></div>';
+        $msg .= '<div class="slider_title_container"><h3>
+						<a href="'.$link.'" class="description krf_limit_text" data-height="40" data-original_text="'.strip_tags($post->post_title).'">
+							'.$post->post_title.'
+						</a>
+        </h3></div>';
     }
     $msg .=
         '</div>
@@ -796,8 +800,8 @@ function projects_map_function($atts)
     $projects_array = array();
     foreach ($posts as $p) {
         $id = $p->ID;
-        $title = $p->post_title;
-        $content = $p->post_content;
+        $title = strip_tags($p->post_title);
+        $content = strip_tags($p->post_content);
         $coordinates = get_post_meta($id, 'map_location', true) ?: array();
         $map_text = get_post_meta($id, 'map_text', true) ?: '';
         if (!empty($coordinates)) {

@@ -10,13 +10,13 @@ get_header();
 			
 			$id = get_queried_object()->term_id;
 			$data = get_term($id, 'krf_services');
-
+/*
 			$next = techno_get_term( $id, 'krf_services', 'next') ?: '';
 			if (empty($next)) {
 						$next = techno_get_term( $id, 'krf_services', 'previous');
 			}
 			$next_link = get_term_link($next['id']);
- 
+ */
 			$img_id = get_term_meta($id, 'image', true) ?: '';
 			$img = custom_image_element($img_id, 'cover', 0 , 1);
 			$description = get_term_meta($id, 'custom_description', true) ?: ''; 
@@ -102,10 +102,12 @@ else { ?>
 		<div id="project_desc"  class="side_msg_section">
 					<div class="main_content_position flex_2">
 							<div class="width_50">
+							<!--
 										<div id="project_see_more" class="width_50">
-																			<div class="before_icon"><h2><?php echo __('SEE ALSO', 'techno'); ?></h2></div>
-																			<div class="next_project"><a href="<?php echo $next_link; ?>"><h3><?php echo $next['name'] ;?></h3></a></div>
+																			<div class="before_icon"><h2><?php //echo __('SEE ALSO', 'techno'); ?></h2></div>
+																			<div class="next_project"><a href="<?php // echo $next_link; ?>"><h3><?php //echo $next['name'] ;?></h3></a></div>
 								</div>
+								-->
 							</div>
 							<div class="width_50">
 									<?php      
