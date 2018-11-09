@@ -52,11 +52,14 @@ function custom_posts_gnnpls($post_id,$post,$out)
 			$post = get_post($post_id);
 					switch ($post_typee) {
 				case 'krf_projects':
-						/*
+				/*
+						$description = get_post_meta($post_id, 'custom_description', true) ?: '';
+
+						
 						if (empty($post->post_content)) {
 							  $my_post = array(
 										'ID'           => $post_id,
-										'post_content' => 'This is the updated content.',
+										'post_content' => $description,
 									);
  
 								// Update the post into the database

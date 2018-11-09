@@ -18,6 +18,13 @@ if (is_admin())
             'capability' => 'read',
             'redirect' => false
         ));
+        $option_page1 = acf_add_options_page(array(
+            'page_title' => 'Projects List',
+            'menu_title' => 'Projects List',
+            'menu_slug' => 'mtv_projects_list',
+            'capability' => 'read',
+            'redirect' => false
+        ));
         }
     }
 if (!function_exists('koryfo_setup')):
@@ -532,6 +539,25 @@ function custom_image_sizes()
     }
 }
 
+add_shortcode('custom_image_element', 'custom_image_element_scd');
+
+function custom_image_element_scd($atts) {
+
+    extract(shortcode_atts(array(
+        'id'     => '',
+        'mode'   => 'cover',
+        'shadow' => '0',
+        'pswp'   => '0',
+        'size'   => ''
+        /* insert post_type*/
+    ), $atts));
+
+    $msg = custom_image_element($id, $mode, $shadow, $pswp, $size);
+
+    return $msg;
+}
+
+
 if (!function_exists('custom_image_element')) {
 
     function custom_image_element($img_id, $mode = 'cover', $shadow = 0, $pswp = 0, $size = '')
@@ -616,11 +642,14 @@ function projects_slider_func($atts)
         <div class="title_section">
             <div class="slider-nav">';
     foreach ($posts as $post) {
-        $msg .= '<div class="slider_title_container"><h3>
-						<a href="'.$link.'" class="description krf_limit_text" data-height="40" data-original_text="'.strip_tags($post->post_title).'">
+        $link = get_permalink($post->ID);
+        $msg .= '<div class="slider_title_container">
+                    <h3>
+		                <a href="'.$link.'" class="description krf_limit_text" data-height="40" data-original_text="'.strip_tags($post->post_title).'">
 							'.$post->post_title.'
 						</a>
-        </h3></div>';
+                    </h3>
+                </div>';
     }
     $msg .=
         '</div>
@@ -890,7 +919,39 @@ function partners_slider_func($atts)
     return $msg;
 }
 
+add_shortcode('projects_list', 'projects_list_func');
 
+function projects_list_func($atts)
+{
+    extract(shortcode_atts(array(
+
+    ), $atts));
+
+    $list = get_field('project_list_', 'options') ?: '';
+
+
+    $msg = '
+    <div id="projects_big_list_container">
+        <h2>'. __('Our Projects List', 'techno') .'</h2>
+        <div class="flex_2 progects_list">';
+        foreach ($list as $project) {
+            $msg .= '
+            <div class="item">
+                <div class="item_inner">
+                    <strong>'. $project['title'] .'</strong>
+                    <div class="desc">'. wpautop($project['description']) .'</div>
+                </div>
+            </div>
+            ';
+        }
+    $msg .= '
+        </div>
+    </div>
+    ';
+
+    
+    return $msg;
+}
 
 add_shortcode('social_media', 'social_media_func');
 

@@ -103,6 +103,15 @@ $path = get_stylesheet_directory();
 
 		endif;
 		?>
+		<div class="side_msg_section">
+		<?php
+		echo do_shortcode('[projects_list]');
+	?>
+	</div>
+	<div id="archive_map">
+		<?php echo do_shortcode('[projects_map]'); ?>
+	</div>
+		
 
 		</main><!-- #main -->
 	</div><!-- #primary -->

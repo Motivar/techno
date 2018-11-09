@@ -9,6 +9,7 @@ var options = {
   separator: ',',
   decimal: '.',
 };
+var infoWindows = [];
 
  $(document).ready(function () {
 
@@ -381,6 +382,7 @@ setTimeout(function () {
    }
     var contentString = '<div id="point_content"><div class="title">'+ project_title +'</div>' + markers[i]['text'] + '</div>';
     var infowindow = new google.maps.InfoWindow();
+    infoWindows.push(infowindow);
    marker = new google.maps.Marker({
     position: position,
     map: map,
@@ -391,10 +393,16 @@ setTimeout(function () {
 
     google.maps.event.addListener(marker, 'click', (function (marker, contentString, infowindow) {
         return function () {
-          infowindow.setContent(contentString);
-          infowindow.open(map, marker);
+          closeAllInfoWindows();
+          setTimeout(function () {
+            infowindow.setContent(contentString);
+            infowindow.open(map, marker);       
+          }, 100);
+
         };
     })(marker, contentString, infowindow));
+
+
 
 
   }
@@ -402,7 +410,11 @@ setTimeout(function () {
 
  }
 
-
+  function closeAllInfoWindows() {
+    for (var i = 0; i < infoWindows.length; i++) {
+      infoWindows[i].close();
+    }
+  }
 
  function slider_slick(element) {
   if ($(element).length > 0) {
@@ -467,7 +479,7 @@ setTimeout(function () {
          if ($('.' + clss.elem).length) {
            var cld = '.' + clss.elem + '.shaved';
            var clnd = '.' + clss.elem + ':not(.shaved)';
-           var hh = 80;
+           var hh = 40;
            if ($(cld).length) {
              shave(cld, hh);
              $(cld).removeClass('shaved');
