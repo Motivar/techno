@@ -1180,21 +1180,23 @@ function techno_get_term($id, $taxonomy, $sequence)  {
     $terms = get_terms($taxonomy, array(
     'hide_empty' => false,
     )) ?: array();
+  //  print_r($terms);die('dfff');
 
     $all_terms  = array();
     foreach ($terms as $term) {
         $all_terms[][$term->term_id] = $term->name;
     }
-
+//print_r($all_terms);die('cccc');
     foreach ($all_terms as $key => $term_details) {
         
         if (array_key_exists(intval($id), $term_details))
         {
             $previous_key = $key - 1 ;
             $next_key = $key + 1;
+
             switch ($sequence) {
                 case 'next':
-                    if (array_key_exists($next_key, $all_terms) && term_exists($next_key)) {
+                    if (array_key_exists($next_key, $all_terms)) {
                         foreach ($all_terms[$next_key] as $keyy => $value) {
                             $msg = array('id' => $keyy, 'name' => $value);
                         }
@@ -1204,7 +1206,7 @@ function techno_get_term($id, $taxonomy, $sequence)  {
                     }
                     break;
                 case 'previous':
-                    if (array_key_exists($previous_key, $all_terms) && term_exists($previous_key)) {
+                    if (array_key_exists($previous_key, $all_terms)) {
                         foreach ($all_terms[$previous_key] as $keyy => $value) {
                             $msg = array('id' => $keyy, 'name' => $value);
                         }
@@ -1216,7 +1218,7 @@ function techno_get_term($id, $taxonomy, $sequence)  {
             }
         }
     }
-
+ //   print_r($msg);die('ffff');
     return $msg;
     
 }
