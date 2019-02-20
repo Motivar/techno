@@ -583,25 +583,27 @@ if (!function_exists('custom_image_element')) {
             $pswp = '';
         }
 
-        for ($i = 3; $i <= 10; $i++) {
+        for ($i = 3; $i <= 10; ++$i) {
             if ($i == 10) {
                 $comma = '';
             } else {
                 $comma = ', ';
             }
-            $img = wp_get_attachment_image_src($img_id, 'custom-size-' . $i);
+            $img = wp_get_attachment_image_src($img_id, 'sbp-custom-size-'.$i);
             $w = $i * 100;
 
-            $srcset .= $img[0] . ' ' . $w . 'w' . $comma;
+            $srcset .= $img[0].' '.$w.'w'.$comma;
         }
         $srcset .= '"';
         if ($shadow == 1) {
-            $shd = 'custom_shadow';
+            $shd = 'sbp_shadow';
         } else {
             $shd = '';
         }
-        $size = getimagesize($image);
-        $img = '<img ' . $srcset . ' class="' . $mode . ' ' . $shd . '" alt="' . $alt_text . '" src="' . $image . '" sizes="(min-width: 1100px) ' . $desktop . 'vw, (min-width: 767px) ' . $tablet . 'vw, (min-width: 550px) ' . $mobile . 'vw" data-natural_width="' . $size[0] . '" data-natural_height="' . $size[1] . '" ' . $pswp . '/>';
+
+        $size = wp_get_attachment_metadata($img_id);
+
+        $img = '<img '.$srcset.' class="'.$mode.' '.$shd.'" alt="'.$alt_text.'" src="'.$image.'" sizes="(min-width: 1100px) '.$desktop.'vw, (min-width: 767px) '.$tablet.'vw, (min-width: 550px) '.$mobile.'vw" data-natural_width="'.$size['width'].'" data-natural_height="'.$size['height'].'" '.$pswp.'/>';
 
         return $img;
     }
@@ -869,14 +871,14 @@ add_shortcode('project_services', 'project_services_func');
 function project_services_func($atts)
 {
     extract(shortcode_atts(array(
-        'number' => '5',
+        'number' => '7',
     ), $atts));
-
     $services = get_terms(array(
         'taxonomy' => 'krf_services',
         'hide_empty' => false,
         'post_status' => 'publish',
         'number' => $number,
+        'parent' => 0
     ));
 
     $msg .= '<div class="services_list">';
@@ -894,7 +896,7 @@ add_shortcode('partners_slider', 'partners_slider_func');
 function partners_slider_func($atts)
 {
     extract(shortcode_atts(array(
-        'number' => '',
+        'number' => '5',
         'columns' => '4',
         'mcolumns' => '3',
         'scolumns' => '1',
@@ -903,17 +905,20 @@ function partners_slider_func($atts)
 
     $partners = get_terms(array(
         'taxonomy' => 'krf_partners',
-        'hide_empty' => false,
+        'hide_empty' => true,
         'post_status' => 'publish',
-        'number' => $number,
     ));
 
-    // print_r($partners);
+    $c =  0;
     $msg = '<div class="partners_carousel" data-columns="' . $columns . '" data-mcolumns="' . $mcolumns . '" data-scolumns="' . $scolumns . '">';
     foreach ($partners as $partner) {
-        $img = get_term_meta($partner->term_id, 'image', true) ?: '';
-        $image = custom_image_element($img, 'contain');
-        $msg .= '<div class="partner">' . $image . '</div>';
+        $c++;
+        if ($c <= $number) {
+            $img = get_term_meta($partner->term_id, 'image', true) ?: '';
+            $image = custom_image_element($img, 'contain');
+            $msg .= '<div class="partner">' . $image . '</div>';
+        }
+
     }
     $msg .= '</div>';
     return $msg;
@@ -1177,10 +1182,21 @@ function sbp_breadcrumbs()
 }
 
 function techno_get_term($id, $taxonomy, $sequence)  {
-    $terms = get_terms($taxonomy, array(
-    'hide_empty' => false,
-    )) ?: array();
-  //  print_r($terms);die('dfff');
+
+    $term = get_term($id, $taxonomy) ?: array();
+    //check if term has children
+    if ($term->parent == 0) {
+        $terms = get_terms($taxonomy, array(
+            'hide_empty' => false,
+            'parent' => 0
+        )) ?: array();
+    } else {
+        $terms = get_terms($taxonomy, array(
+            'hide_empty' => false,
+            'parent' => $term->parent
+        )) ?: array();
+    }
+
 
     $all_terms  = array();
     foreach ($terms as $term) {

@@ -21,7 +21,10 @@
 </head>
 
 <body <?php body_class(); ?>>
+<?php
+if (is_front_page()) { ?>
 <div id="bodymovin"><?php echo do_shortcode('[bodymovin anim_id="214"]');?></div>
+<?php } ?>
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'multiplex' ); ?></a>
 		<section id="top-widget" class="top-widgets row global_padding u-full-width">

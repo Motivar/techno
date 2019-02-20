@@ -63,17 +63,7 @@ $path = get_stylesheet_directory();
 				$description = get_the_content();
 				$title = get_the_title();
 				$link = get_permalink(get_the_ID());
-
-				//check if it is se ekseliksi
-				$terms = get_the_terms(get_the_ID(), 'krf_project_cat') ?: array();
-				$not_array  = array(25);
-				$t_array = array();
-				foreach ($terms as $term) {
-					 $t_array[] = $term->term_id;
-				}
-				$a = array_intersect($not_array, $t_array) ?: array();
-				if (empty($a)) {
-					?>
+				?>
 						<div class="project_card_wrap <?php echo $cls;  ?>">
 									<div class="project_card">
 											<div class="image">
@@ -88,7 +78,7 @@ $path = get_stylesheet_directory();
 									</div>
 						</div>
 				<?php
-				}
+
 
 
 			endwhile;
@@ -97,7 +87,7 @@ $path = get_stylesheet_directory();
 			</div>
 		</div>
 		<div class="side_msg">
-			<h1><?php echo __('PROJECTS', 'techno'); ?></h1>
+			<h1><?php echo get_queried_object()->name; ?></h1>
 		</div>
 </div>
 
@@ -115,12 +105,10 @@ $path = get_stylesheet_directory();
 		?>
 		<div class="side_msg_section">
 		<?php
-		echo do_shortcode('[projects_list]');
+		//echo do_shortcode('[projects_list]');
 	?>
 	</div>
-	<div id="archive_map">
-		<?php echo do_shortcode('[projects_map]'); ?>
-	</div>
+
 		
 
 		</main><!-- #main -->

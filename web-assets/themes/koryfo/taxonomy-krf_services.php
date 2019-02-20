@@ -17,7 +17,7 @@ get_header();
 			$next_link = get_term_link($next['id']);
  
 			$img_id = get_term_meta($id, 'image', true) ?: '';
-			$img = custom_image_element($img_id, 'cover', 0 , 1);
+			$img = custom_image_element($img_id, 'contain', 0 , 1);
 			$description = get_term_meta($id, 'custom_description', true) ?: ''; 
 ?>
 
@@ -29,7 +29,16 @@ if ( count( get_term_children( $id, 'krf_services' ) ) > 0 ) {
 ?>
 <div id="services_archive" class="side_msg_section">
 		<div class="main_content_position">
-			<?php 	echo do_shortcode('[services_slider img_show="cover" parent="'.$id.'"]'); ?>
+			<?php 	
+			echo do_shortcode('[services_slider img_show="contain" parent="'.$id.'"]'); 
+			?>
+			<div class="parent_desc">
+			<?php
+			if (!empty($description)) {
+					echo wpautop($description);
+			}
+			?>
+			</div>
 		</div>
 		<div class="side_msg">
 			<h1><?php echo $data->name; ?></h1>
