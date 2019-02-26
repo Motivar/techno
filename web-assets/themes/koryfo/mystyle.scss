@@ -317,8 +317,10 @@ a {
   h5,
   h1 {
    margin-top: 0;
+   text-transform: uppercase;
   }
   a {
+   text-transform: uppercase;
    color: $standard-color;
    text-decoration: none;
    &:hover {
@@ -1264,6 +1266,7 @@ body.no-scroll {
  display: -webkit-flex;
  display: flex;
  margin-top: 40px;
+ align-items: center;
  .social_media_item {
   margin: 0 15px;
   a {
@@ -1560,17 +1563,20 @@ body.no-scroll {
   @media (min-width: 900px) {
    width: 33.33%;
   }
+  @media (min-width: 1200px) {
+   width: 25%;
+  }
   .item_inner {
    padding: 5px 20px;
    strong {
     font-size: 13px !important;
    }
    .desc {
-     p {
-       font-size: 12px !important;
-     }
+    p {
+     font-size: 12px !important;
+    }
    }
-  } 
+  }
  }
 }
 
@@ -1587,4 +1593,25 @@ img.krf_size {
 
 .parent_desc {
  padding-top: 40px;
+}
+
+.garbili_table {
+ td {
+  padding: 20px 0;
+  border-bottom: 1px solid #6cc;
+ }
+}
+
+li.wpml-ls-item {
+ .wpml-ls-display {
+  display: none !important;
+ }
+}
+
+.footer_social {
+ .social_media_container {
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 30px;
+ }
 }

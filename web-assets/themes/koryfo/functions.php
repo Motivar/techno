@@ -617,8 +617,8 @@ function projects_slider_func($atts)
         'post_type' => 'krf_projects',
         'number' => '-1',
         'slick' => '1',
-        'img_show' => 'contain',
-        /* insert post_type*/
+        'img_show' => 'contain'
+     /* insert post_type*/
     ), $atts));
     $msg = '';
 
@@ -628,15 +628,19 @@ function projects_slider_func($atts)
         'post_status' => 'publish',
     );
     $posts = get_posts($args);
+    
     $msg = '
     <div class="projects_slider">
         <div class="image_section">
             <div class="slider-for">';
     foreach ($posts as $post) {
-        $img = get_post_meta($post->ID, '_thumbnail_id', true) ?: '';
-        $image = custom_image_element($img, $img_show);
-        $link = get_permalink($post->ID);
-        $msg .= '<div class="slider_img_container"><a href="' . $link . '">' . $image . '</a></div>';
+        $info = wpml_get_language_information(null, $post->ID);
+        if ($info['language_code'] == ICL_LANGUAGE_CODE) {
+            $img = get_post_meta($post->ID, '_thumbnail_id', true) ?: '';
+            $image = custom_image_element($img, $img_show);
+            $link = get_permalink($post->ID);
+            $msg .= '<div class="slider_img_container"><a href="' . $link . '">' . $image . '</a></div>';
+        }
     }
     $msg .= '
             </div>
@@ -644,14 +648,17 @@ function projects_slider_func($atts)
         <div class="title_section">
             <div class="slider-nav">';
     foreach ($posts as $post) {
-        $link = get_permalink($post->ID);
-        $msg .= '<div class="slider_title_container">
-                    <h3>
-		                <a href="'.$link.'" class="description krf_limit_text" data-height="40" data-original_text="'.strip_tags($post->post_title).'">
-							'.$post->post_title.'
-						</a>
-                    </h3>
-                </div>';
+        $info = wpml_get_language_information(null, $post->ID);
+        if ($info['language_code'] == ICL_LANGUAGE_CODE) {
+            $link = get_permalink($post->ID);
+            $msg .= '<div class="slider_title_container">
+                        <h3>
+                            <a href="'.$link.'" class="description krf_limit_text" data-height="40" data-original_text="'.strip_tags($post->post_title).'">
+                                '.$post->post_title.'
+                            </a>
+                        </h3>
+                    </div>';
+        }
     }
     $msg .=
         '</div>

@@ -14,6 +14,7 @@
 	</div><!-- #content -->
 </div><!-- #barba js -->
 	<footer id="colophon" class="site-footer">
+		<div class="footer_social"><?php echo do_shortcode('[social_media][wpml_language_switcher flags="1" link_current="0" native="0"]'); ?></div>
 		<div class="footer_menu">
 				<div class="left_menu">
 						<?php dynamic_sidebar('footer_menu_left'); ?>
