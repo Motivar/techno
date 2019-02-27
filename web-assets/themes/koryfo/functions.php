@@ -992,6 +992,9 @@ function social_media_func($atts)
                         case 'twitter':
                             $icon = 'fa-twitter';
                             break; 
+                        case 'linkedin':
+                            $icon = 'fa-linkedin';
+                            break;
                         default:
                             $icon = '';
                             break;              
