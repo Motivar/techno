@@ -2,7 +2,6 @@
 var navbar = document.getElementById("masthead");
 var content = document.getElementById("content");
 var sticky = navbar.offsetTop;
-var running = 0;
 var lastscroll = 0;
 var st = 0;
 var stick = 0;

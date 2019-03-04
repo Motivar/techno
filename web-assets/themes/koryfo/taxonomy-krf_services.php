@@ -7,7 +7,17 @@
  * @package koryfo
  */
 get_header();
-			
+    $path = get_template_directory_uri();
+
+    //wp_enqueue_script('theme-jquery-331', $path . '/js/jquery.min.js', array(), false, true);
+    wp_enqueue_script('theme-slick-js', $path . '/js/slick/slick.min.js', array(), false, true);
+    wp_enqueue_style('theme-slick-css', $path . '/js/slick/slick.css', true, '1.0.0');
+				wp_enqueue_style('theme-slick-theme-css', $path . '/js/slick/slick-theme.css', true, '1.0.0');
+    wp_enqueue_style( 'koryfo-pswp-css', $path . '/template-parts/photoswipe/photoswipe.css' );
+    wp_enqueue_style( 'koryfo-pswp-default-skin-css', $path . '/template-parts/photoswipe/default-skin.css' );
+				wp_enqueue_script( 'koryfo-pswp-min-js', $path . '/template-parts/photoswipe/photoswipe.min.js', array(), '20180813', true );
+    wp_enqueue_script( 'koryfo-pswp-default-js', $path . '/template-parts/photoswipe/photoswipe-ui-default.min.js', array(), '20180813', true );
+
 			$id = get_queried_object()->term_id;
 			$data = get_term($id, 'krf_services');
 			$next = techno_get_term( $id, 'krf_services', 'next') ?: '';

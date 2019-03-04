@@ -56,7 +56,6 @@ $path = get_stylesheet_directory();
 					break;
 			}
 
-
 				the_post();
 				$img = get_post_meta(get_the_ID(), '_thumbnail_id', true) ?: '';
 				$image = custom_image_element($img, 'cover');

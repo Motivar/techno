@@ -6,6 +6,52 @@
  *
  * @package koryfo
  */
+
+define('filox_metrics_path', plugin_dir_path(__FILE__));
+define('filox_metrics_url', plugin_dir_url(__FILE__));
+
+
+ add_action('wp_loaded', function () {
+  $path = get_template_directory_uri();
+  //wp_register_script('fx-metrics-admin-script', filox_metrics_url.'assets/js/admin/fxm-admin-script.js', array(), false, true);
+  wp_register_style('koryfo-style', get_stylesheet_uri());
+  wp_register_style('koryfo-mystyle',  $path . '/mystyle.min.css', true, '1.0.0');
+
+
+}, 10, 1);
+
+add_action('wp_enqueue_scripts', function () {
+  wp_enqueue_style('koryfo-style');
+  wp_enqueue_style('koryfo-mystyle');
+  
+}, 10, 1);
+
+
+function koryfo_scripts()
+{
+    $path = get_template_directory_uri();
+    wp_enqueue_script('krf-shave-js', $path . '/js/shave.min.js', array(), false, true);
+
+    wp_enqueue_script('koryfo-sticky-menu', $path . '/js/sticky_menu.js', array(), '20180807', true);
+
+    wp_enqueue_script('koryfo-navigation', $path . '/js/navigation.js', array(), '20151215', true);
+
+    wp_enqueue_script('koryfo-skip-link-focus-fix', $path . '/js/skip-link-focus-fix.js', array(), '20151215', true);
+
+   // wp_enqueue_script('techno-barba', $path . '/js/barba.js', array(), '20180808', true);
+    if (is_front_page()) {
+        wp_enqueue_script('krf-shave-js', $path . '/js/shave.min.js', array(), false, true);  
+        wp_enqueue_script('count-up-js', $path . '/js/countUp.js', array(), false, true);
+    }
+
+
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
+wp_enqueue_script('techno-main', $path . '/js/techno.js', array(), '20180809', true);    
+}
+add_action('wp_enqueue_scripts', 'koryfo_scripts');
+
  
 if (is_admin())
     {
@@ -193,44 +239,7 @@ function koryfo_widgets_init()
 }
 add_action('widgets_init', 'koryfo_widgets_init');
 
-/**
- * Enqueue scripts and styles.
- */
-function koryfo_scripts()
-{
-    $path = get_template_directory_uri();
-    wp_enqueue_style('koryfo-style', get_stylesheet_uri());
 
-    wp_enqueue_style('koryfo-mystyle', $path . '/mystyle.min.css');
-
-    wp_enqueue_script('theme-slick-js', $path . '/js/slick/slick.min.js', array(), false, true);
-    wp_enqueue_style('theme-slick-css', $path . '/js/slick/slick.css', true, '1.0.0');
-    wp_enqueue_style('theme-slick-theme-css', $path . '/js/slick/slick-theme.css', true, '1.0.0');
-    wp_enqueue_script('koryfo-sticky-menu', $path . '/js/sticky_menu.js', array(), '20180807', true);
-
-    wp_enqueue_script('koryfo-navigation', $path . '/js/navigation.js', array(), '20151215', true);
-
-    wp_enqueue_script('koryfo-skip-link-focus-fix', $path . '/js/skip-link-focus-fix.js', array(), '20151215', true);
-    wp_enqueue_script('krf-gmap-js', 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDEB3THsEXL1-4pmOPgkXfb0eFwDzZ0-R0');
-
-    wp_enqueue_script('techno-barba', $path . '/js/barba.js', array(), '20180808', true);
-    wp_enqueue_script('techno-main', $path . '/js/techno.js', array(), '20180809', true);
-    wp_enqueue_script('krf-shave-js', $path . '/js/shave.min.js', array(), false, true);  
-    wp_enqueue_script('count-up-js', $path . '/js/countUp.js', array(), false, true);
-
-wp_enqueue_style( 'koryfo-pswp-css', $path . '/template-parts/photoswipe/photoswipe.css' );
-    
-wp_enqueue_style( 'koryfo-pswp-default-skin-css', $path . '/template-parts/photoswipe/default-skin.css' );
-
-wp_enqueue_script( 'koryfo-pswp-min-js', $path . '/template-parts/photoswipe/photoswipe.min.js', array(), '20180813', true );
-
-wp_enqueue_script( 'koryfo-pswp-default-js', $path . '/template-parts/photoswipe/photoswipe-ui-default.min.js', array(), '20180813', true );
-
-    if (is_singular() && comments_open() && get_option('thread_comments')) {
-        wp_enqueue_script('comment-reply');
-    }
-}
-add_action('wp_enqueue_scripts', 'koryfo_scripts');
 
 /**
  * Implement the Custom Header feature.
@@ -613,6 +622,17 @@ add_shortcode('projects_slider', 'projects_slider_func');
 
 function projects_slider_func($atts)
 {
+    $path = get_template_directory_uri();
+
+    //wp_enqueue_script('theme-jquery-331', $path . '/js/jquery.min.js', array(), false, true);
+    wp_enqueue_script('theme-slick-js', $path . '/js/slick/slick.min.js', array(), false, true);
+    wp_enqueue_style('theme-slick-css', $path . '/js/slick/slick.css', true, '1.0.0');
+    wp_enqueue_style('theme-slick-theme-css', $path . '/js/slick/slick-theme.css', true, '1.0.0');
+    wp_enqueue_style( 'koryfo-pswp-css', $path . '/template-parts/photoswipe/photoswipe.css' );
+    wp_enqueue_style( 'koryfo-pswp-default-skin-css', $path . '/template-parts/photoswipe/default-skin.css' );
+    wp_enqueue_script( 'koryfo-pswp-min-js', $path . '/template-parts/photoswipe/photoswipe.min.js', array(), '20180813', true );
+    wp_enqueue_script( 'koryfo-pswp-default-js', $path . '/template-parts/photoswipe/photoswipe-ui-default.min.js', array(), '20180813', true );
+
     extract(shortcode_atts(array(
         'post_type' => 'krf_projects',
         'number' => '-1',
@@ -674,7 +694,16 @@ add_shortcode('services_slider', 'services_slider_func');
 
 function services_slider_func($atts)
 {
-    
+    $path = get_template_directory_uri();
+
+    wp_enqueue_script('theme-slick-js', $path . '/js/slick/slick.min.js', array(), false, true);
+    wp_enqueue_style('theme-slick-css', $path . '/js/slick/slick.css', true, '1.0.0');
+    wp_enqueue_style('theme-slick-theme-css', $path . '/js/slick/slick-theme.css', true, '1.0.0');
+    wp_enqueue_style( 'koryfo-pswp-css', $path . '/template-parts/photoswipe/photoswipe.css' );
+    wp_enqueue_style( 'koryfo-pswp-default-skin-css', $path . '/template-parts/photoswipe/default-skin.css' );
+    wp_enqueue_script( 'koryfo-pswp-min-js', $path . '/template-parts/photoswipe/photoswipe.min.js', array(), '20180813', true );
+    wp_enqueue_script( 'koryfo-pswp-default-js', $path . '/template-parts/photoswipe/photoswipe-ui-default.min.js', array(), '20180813', true );
+
     extract(shortcode_atts(array(
         'taxonomy' => 'krf_services',
         'slick' => '1',
@@ -823,6 +852,8 @@ add_shortcode('projects_map', 'projects_map_function');
 
 function projects_map_function($atts)
 {
+    wp_enqueue_script('krf-gmap-js', 'https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDEB3THsEXL1-4pmOPgkXfb0eFwDzZ0-R0');
+
     
 
     $msg .= '<div id="map_wrapper">
@@ -1212,13 +1243,22 @@ function techno_get_term($id, $taxonomy, $sequence)  {
     foreach ($terms as $term) {
         $all_terms[][$term->term_id] = $term->name;
     }
-//print_r($all_terms);die('cccc');
+    $max = count($all_terms);
+    $max = $max - 1;
+  //  echo $max; die;
+//print_r($all_terms);
     foreach ($all_terms as $key => $term_details) {
         
         if (array_key_exists(intval($id), $term_details))
         {
             $previous_key = $key - 1 ;
             $next_key = $key + 1;
+            if ($key == 0) {
+                $previous_key = $max;
+            }
+            if ($key == $max) {
+                $next_key = 0;
+            }
 
             switch ($sequence) {
                 case 'next':
@@ -1244,7 +1284,7 @@ function techno_get_term($id, $taxonomy, $sequence)  {
             }
         }
     }
- //   print_r($msg);die('ffff');
+  //  print_r($msg);die('ffff');
     return $msg;
     
 }

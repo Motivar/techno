@@ -1,8 +1,9 @@
-(function ($) {
  "use strict";
 var items, numAnim;
 var swidth = 0;
+var running = 0;
 var boxList = [];
+var count = 0;
 var options = {
   useEasing: true,
   useGrouping: true,
@@ -11,36 +12,34 @@ var options = {
 };
 var infoWindows = [];
 
- $(document).ready(function () {
-
-  $(window).resize(function () {
-   myresize();
-  });
- // Barba.Dispatcher.on('newPageReady', function () { /*uncomment this to remove barba*/
+  
+ //Barba.Dispatcher.on('newPageReady', function () { /*uncomment this to remove barba*/
    check_sticky();
    openNav();
 
 /*main_event*/
 window.onscroll = function () {
-  if (running == 0) {
     setTimeout(sticky_it(), 300);
-  }
 }
 
    items = [];
    myresize();
 
+   jQuery(window).resize(function () {
+     myresize();
+   });
 
-  $(window).scroll(function () {
-    if (isScrolledIntoView($('.anim_numbers'))) {
-      if ($('.anim_numbers').length > 0) {
-        $('.anim_numbers').each(function (index) {
-          if (!($(this).hasClass('animated'))) {
-          var id = $(this).attr('id');
-          var start = $(this).attr('data-start');
-          var final = $(this).attr('data-final');
-          var decimals = $(this).attr('data-decimals');
-          var duration = $(this).attr('data-duration');
+
+  jQuery(window).scroll(function () {
+    if (isScrolledIntoView(jQuery('.anim_numbers'))) {
+      if (jQuery('.anim_numbers').length > 0) {
+        jQuery('.anim_numbers').each(function (index) {
+          if (!(jQuery(this).hasClass('animated'))) {
+          var id = jQuery(this).attr('id');
+          var start = jQuery(this).attr('data-start');
+          var final = jQuery(this).attr('data-final');
+          var decimals = jQuery(this).attr('data-decimals');
+          var duration = jQuery(this).attr('data-duration');
 
           var number = new CountUp(id, start, final, decimals, duration, options);
           if (!number.error) {
@@ -48,7 +47,7 @@ window.onscroll = function () {
           } else {
             console.error(number.error);
           }
-          $(this).addClass('animated');
+          jQuery(this).addClass('animated');
           }
         });
       }
@@ -56,19 +55,29 @@ window.onscroll = function () {
   });
 
 
-   $('.side_msg').each(function (index) {
-     var width = $(this).width();
+   jQuery('.side_msg').each(function (index) {
+     var width = jQuery(this).width();
      var final_width = width + 20;
-     $(this).css('top', final_width + 'px');
+     jQuery(this).css('top', final_width + 'px');
    });
 
    setTimeout(function () {
-    if ($('.img_gallery').length > 0) {
+    
+    if (jQuery('.img_gallery').length > 0) {
+      count++;
+      $('.img_gallery').addClass('count_'+count);
+     
+     console.log('img_gallery');
 
-     slider_slick('.img_gallery');
-     var photoSwipe = $(".pswp").html();
-     $('body').prepend('<div class="pswp">' + photoSwipe + '</div>');
 
+     slider_slick('.count_' + count);
+     if (count == 1) { 
+      var photoSwipe = jQuery(".pswp").html();
+      jQuery('body').prepend('<div class="pswp">' + photoSwipe + '</div>');
+    }
+
+     
+     
      var gallery = '';
      var options = {
       // history & focus options are disabled on CodePen
@@ -86,14 +95,14 @@ window.onscroll = function () {
 
       // build items array
       if (items.length == 0) {
-       $('.img_gallery [data-sbp_pswp]').each(function () {
-        if (!($(this).closest('.slick-slide').hasClass('slick-cloned'))) {
-         if ($(this).is('img')) {
-          var image = $(this).closest('img');
+       jQuery('.count_'+ count + ' [data-sbp_pswp]').each(function () {
+        if (!(jQuery(this).closest('.slick-slide').hasClass('slick-cloned'))) {
+         if (jQuery(this).is('img')) {
+          var image = jQuery(this).closest('img');
           var the_image = new Image();
           the_image.src = image.attr('src');
-          var imageWidth = $(this).attr('data-natural_width');
-          var imageHeight = $(this).attr('data-natural_height');
+          var imageWidth = jQuery(this).attr('data-natural_width');
+          var imageHeight = jQuery(this).attr('data-natural_height');
 
           items.push({
            src: the_image.src,
@@ -102,9 +111,9 @@ window.onscroll = function () {
           });
 
           //     }
-          $(this).closest('.img_gallery').attr('data-photoswipe', $(this).closest('img').attr('src'));
+          jQuery(this).closest('.count_' + count ).attr('data-photoswipe', jQuery(this).closest('img').attr('src'));
          } else {
-          var video_url = $(this).attr('data-url');
+          var video_url = jQuery(this).attr('data-url');
           items.push({
            html: '<div class="sbp_video-container"><div class="sbp_video-wrapper"><video class="pswp__video" src="' + video_url + '" controls muted preload="auto" autoplay></video></div></div>'
           });
@@ -139,12 +148,16 @@ window.onscroll = function () {
 
      };
 
-     $(document).on('click', '.img_gallery [data-sbp_pswp]', function () {
-        openPhotoSwipe($(this).attr('src'));
+     jQuery(document).on('click', '.count_' + count + ' [data-sbp_pswp]', function () {
+        openPhotoSwipe(jQuery(this).attr('src'));
      });
     }
-     if ($('.projects_slider .slider-for').length > 0) {
-       $('.projects_slider .slider-for').slick({
+     if (jQuery('.projects_slider .slider-for').length > 0) {
+       console.log('projects_slider');
+     count++;
+       $('.projects_slider .slider-for').addClass('count_' + count);
+       $('.projects_slider .slider-nav').addClass('count_' + count);
+       jQuery('.projects_slider .slider-for.count_' + count ).slick({
       slidesToShow: 1,
       slidesToScroll: 1,
       arrows: false,
@@ -152,12 +165,12 @@ window.onscroll = function () {
          asNavFor: '.projects_slider .slider-nav'
      });
 
-       $('.projects_slider .slider-nav').slick({
+      jQuery('.projects_slider .slider-nav.count_' + count).slick({
       nextArrow: '<i class="slick_next  fa fa-angle-right slick-left" ></i>',
       prevArrow: '<i class="slick_prev fa fa-angle-left slick-right"></i>',
       slidesToShow: 5,
       slidesToScroll: 1,
-         asNavFor: '.projects_slider .slider-for',
+      asNavFor: '.projects_slider .slider-for',
       dots: true,
       centerMode: true,
       focusOnSelect: true,
@@ -176,8 +189,14 @@ window.onscroll = function () {
       }]
      });
     }
-     if ($('.services_slider .slider-for').length > 0) {
-       $('.services_slider .slider-for').slick({
+     if (jQuery('.services_slider .slider-for').length > 0) {
+       console.log('services_slider');
+       /*
+       count++;
+       $('.services_slider .slider-for').addClass('count_'+count);
+       $('.services_slider .slider-nav').addClass('count_' + count);
+       */
+       jQuery('.services_slider .slider-for').slick({
          slidesToShow: 1,
          slidesToScroll: 1,
          arrows: false,
@@ -186,7 +205,7 @@ window.onscroll = function () {
          asNavFor: '.services_slider .slider-nav'
        });
 
-       $('.services_slider .slider-nav').slick({
+       jQuery('.services_slider .slider-nav').slick({
          nextArrow: '<i class="slick_next  fa fa-angle-right slick-left" ></i>',
          prevArrow: '<i class="slick_prev fa fa-angle-left slick-right"></i>',
          slidesToShow: 1,
@@ -202,27 +221,31 @@ window.onscroll = function () {
          autoplaySpeed: 4000
        });
      }
-    if ($('.partners_carousel').length > 0) {
-     slider_slick('.partners_carousel');
+    if (jQuery('.partners_carousel').length > 0) {
+      console.log('partners');
+      count++;
+      $('.partners_carousel').addClass('count_'+count);
+      partners_slick('.count_' + count);
     }
 
     /*bruteforce --- properties map script*/
-    if ($('#map_wrapper').length > 0) {
-     if ($('.coordinates').length > 0) {
+    if (jQuery('#map_wrapper').length > 0) {
+     if (jQuery('.coordinates').length > 0) {
       setTimeout(function () {
+        console.log('map');
        google_map_initialize();
       }, 1000);
      }
     }
-   }, 1000);
+   }, 800);
 
 
-   if ($('.hamburger').length > 0) {
-    $('.hamburger').click(function () {
-     if ($(this).hasClass('is-active')) {
-      $('.hamburger').removeClass('is-active');
+   if (jQuery('.hamburger').length > 0) {
+    jQuery('.hamburger').click(function () {
+     if (jQuery(this).hasClass('is-active')) {
+      jQuery('.hamburger').removeClass('is-active');
      } else {
-      $('.hamburger').addClass('is-active');
+      jQuery('.hamburger').addClass('is-active');
      }
     });
    }
@@ -230,14 +253,13 @@ window.onscroll = function () {
 
 
 setTimeout(function () {
- $('#bodymovin').slideUp('250');
- $('body').addClass('showthis');
+ jQuery('#bodymovin').slideUp('250');
+ jQuery('body').addClass('showthis');
 }, 3500);
    
 
 
-//  });  /*remove this to remove bara
-
+ //});  
 
   /*start removing for barba*/
   /*initialize barba*//*
@@ -253,15 +275,20 @@ setTimeout(function () {
        * (Barba.js also comes with an handy Promise polyfill!)
        */
 
-      // As soon the loading is finished and the old page is faded out, let's fade the new page
+      // As soon the loading is finished and the old page is faded out, let's fade the new page 
       /*
+      if (jQuery('.krf_limit_text').length > 0) {
+        jQuery('.krf_limit_text').each(function (index) {
+          shave_text(this);
+        });
+      }
       Promise
         .all([this.newContainerLoading, this.fadeOut()])
         .then(this.fadeIn.bind(this));
     },
 
     fadeOut: function () {
-      return $(this.oldContainer).animate({
+      return jQuery(this.oldContainer).animate({
         opacity: 0.8
       }, 100).promise();
     },
@@ -273,11 +300,11 @@ setTimeout(function () {
        * Please note, newContainer is available just after newContainerLoading is resolved!
        */
 /*
-      $(window).scrollTop(0);
+      jQuery(window).scrollTop(0);
       var _this = this;
-      var $el = $(this.newContainer);
+      var $el = jQuery(this.newContainer);
 
-      $(this.oldContainer).hide();
+      jQuery(this.oldContainer).hide();
 
       $el.css({
         visibility: 'visible',
@@ -300,7 +327,7 @@ setTimeout(function () {
   /**
    * Next step, you have to tell Barba to use the new Transition
    */
-/*
+  /*
   Barba.Pjax.getTransition = function () {
     /**
      * Here you can use your own logic!
@@ -309,13 +336,13 @@ setTimeout(function () {
 /*
     return FadeTransition;
   };
-
+*/
 /*stop removing for barba*/
 
- });
+
 
  function google_map_initialize() {
-  var coordinates_string = $('.coordinates').text();
+  var coordinates_string = jQuery('.coordinates').text();
   var markers = JSON.parse(coordinates_string);
   var map;
   var bounds = new google.maps.LatLngBounds();
@@ -417,15 +444,16 @@ setTimeout(function () {
   }
 
  function slider_slick(element) {
-  if ($(element).length > 0) {
-   var columns = $(element).data('columns');
-   var mcolumns = $(element).data('mcolumns');
-   var scolumns = $(element).data('scolumns');
-
-   $(element).not('.slick-initialized').slick({
+  if (jQuery(element).length > 0) {
+  /*  
+   var columns = jQuery(element).data('columns');
+   var mcolumns = jQuery(element).data('mcolumns');
+   var scolumns = jQuery(element).data('scolumns');
+*/
+   jQuery(element).not('.slick-initialized').slick({
     nextArrow: '<i class="slick_next  fa fa-angle-right slick-left" ></i>',
     prevArrow: '<i class="slick_prev fa fa-angle-left slick-right"></i>',
-    slidesToShow: columns,
+    slidesToShow: 1,
     dots: false,
     speed: 400,
     infinite: true,
@@ -438,14 +466,14 @@ setTimeout(function () {
     responsive: [{
      breakpoint: 1100,
      settings: {
-      slidesToShow: mcolumns,
+      slidesToShow: 1,
       slidesToScroll: 1,
       autoplay: false
      }
     }, {
      breakpoint: 750,
      settings: {
-      slidesToShow: scolumns,
+      slidesToShow: 1,
       slidesToScroll: 1,
       //  autoplay: false
      }
@@ -462,10 +490,53 @@ setTimeout(function () {
 
   }
  }
+  function partners_slick(element) {
+    if (jQuery(element).length > 0) {
+
+      jQuery(element).not('.slick-initialized').slick({
+        nextArrow: '<i class="slick_next  fa fa-angle-right slick-left" ></i>',
+        prevArrow: '<i class="slick_prev fa fa-angle-left slick-right"></i>',
+        slidesToShow: 4,
+        dots: false,
+        speed: 400,
+        infinite: true,
+        swipeToSlide: true,
+        variableWidth: false,
+        centerMode: false,
+        centerPadding: '30px',
+        autoplay: true,
+        autoplaySpeed: 2000,
+        responsive: [{
+          breakpoint: 1100,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: false
+          }
+        }, {
+          breakpoint: 750,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            //  autoplay: false
+          }
+        }, {
+          breakpoint: 550,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            //  centerMode: true,
+            autoplay: false
+          }
+        }]
+      });
+
+    }
+  }
 
    function shave_text(element) {
      var current_width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-     var original_text = $(element).attr('data-original_text');
+     var original_text = jQuery(element).attr('data-original_text');
      var elements = [{
        elem: 'krf_limit_text',
        minwidth: 1,
@@ -476,35 +547,35 @@ setTimeout(function () {
 
      if (current_width !== swidth) {
        $.each(elements, function (i, clss) {
-         if ($('.' + clss.elem).length) {
+         if (jQuery('.' + clss.elem).length) {
            var cld = '.' + clss.elem + '.shaved';
            var clnd = '.' + clss.elem + ':not(.shaved)';
            var hh = 40;
-           if ($(cld).length) {
+           if (jQuery(cld).length) {
              shave(cld, hh);
-             $(cld).removeClass('shaved');
+             jQuery(cld).removeClass('shaved');
            }
            if (current_width >= clss.minwidth && ((clss.maxwidth > current_width && clss.maxwidth > 0) || clss.maxwidth == 0)) {
-             $(clnd).each(function () {
+             jQuery(clnd).each(function () {
 
                //  if (current_width < 768) {
                //    hh += 20;
                // } else {
-               if ($(this).attr('data-height')) {
-                 hh = parseInt($(this).attr('data-height'));
+               if (jQuery(this).attr('data-height')) {
+                 hh = parseInt(jQuery(this).attr('data-height'));
                }
                // }
-               //$(this).text(clss.original_text);
+               //jQuery(this).text(clss.original_text);
                shave(this, hh, {
                  classname: clss.elem
                });
-               $(this).addClass('shaved');
+               jQuery(this).addClass('shaved');
 
-               if ($(this).attr('data-link')) {
+               if (jQuery(this).attr('data-link')) {
                  setTimeout(function () {
-                   $('.krf_limit_text.removed[data-link]').each(function (index) {
-                     $('<a href="' + $(this).attr('data-link') + '" class="read_more">  ' + $(this).attr('data-more_txt') + '</a>').appendTo(this);
-                     $(this).removeClass('removed');
+                   jQuery('.krf_limit_text.removed[data-link]').each(function (index) {
+                     jQuery('<a href="' + jQuery(this).attr('data-link') + '" class="read_more">  ' + jQuery(this).attr('data-more_txt') + '</a>').appendTo(this);
+                     jQuery(this).removeClass('removed');
 
                    });
                  }, 600);
@@ -518,15 +589,15 @@ setTimeout(function () {
    }
 
    function isScrolledIntoView(elem) {
-     if ($(elem).length)
+     if (jQuery(elem).length)
      {
 
      
-     var docViewTop = $(window).scrollTop();
-     var docViewBottom = docViewTop + $(window).height();
+     var docViewTop = jQuery(window).scrollTop();
+     var docViewBottom = docViewTop + jQuery(window).height();
 
-     var elemTop = $(elem).offset().top;
-     var elemBottom = elemTop + $(elem).height();
+     var elemTop = jQuery(elem).offset().top;
+     var elemBottom = elemTop + jQuery(elem).height();
 
      return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
      }
@@ -534,15 +605,15 @@ setTimeout(function () {
 
 
  function myresize() {
-    if ($('.krf_limit_text').length > 0) {
-      $('.krf_limit_text').each(function (index) {
+    if (jQuery('.krf_limit_text').length > 0) {
+      jQuery('.krf_limit_text').each(function (index) {
         shave_text(this);
       });
     }
  }
 
 
-})(jQuery);
+
 
 /*
 
@@ -567,7 +638,7 @@ var FadeTransition = Barba.BaseTransition.extend({
  },
 
  fadeOut: function () {
-  return $(this.oldContainer).animate({
+  return jQuery(this.oldContainer).animate({
    opacity: 0.8
   }, 1000).promise();
  },
@@ -579,11 +650,11 @@ var FadeTransition = Barba.BaseTransition.extend({
    * Please note, newContainer is available just after newContainerLoading is resolved!
   
 
-  $(window).scrollTop(0);
+  jQuery(window).scrollTop(0);
   var _this = this;
-  var $el = $(this.newContainer);
+  var $el = jQuery(this.newContainer);
 
-  $(this.oldContainer).hide();
+  jQuery(this.oldContainer).hide();
 
   $el.css({
    visibility: 'visible',

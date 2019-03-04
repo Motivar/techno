@@ -12,7 +12,7 @@
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
@@ -22,7 +22,7 @@
 
 <body <?php body_class(); ?>>
 <?php
-if (is_front_page()) { ?>
+if (is_front_page() || (get_the_ID()== 263) || (get_the_ID() == 2099) || (get_queried_object()->term_id == 71) ||  (get_queried_object()->term_id == 56) ) { ?>
 <div id="bodymovin"><?php echo do_shortcode('[bodymovin anim_id="214"]');?></div>
 <?php } ?>
 <div id="page" class="site">

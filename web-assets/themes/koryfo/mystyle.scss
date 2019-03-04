@@ -724,9 +724,9 @@ body.home {
     overflow: hidden;
     background: $light-color;
     img {
-     opacity: 0.5;
+     opacity: 1;
      &:hover {
-      opacity: 1;
+      opacity: 0.5;
      }
     }
    }
@@ -766,10 +766,10 @@ body.home {
   background: $light-color;
   .img_gallery {
    img {
-    opacity: 0.5;
+    opacity: 1;
     @extend .trans;
     &:hover {
-     opacity: 1;
+     opacity: 0.5;
      cursor: pointer;
      cursor: hand;
     }
@@ -1060,10 +1060,10 @@ body.no-scroll {
       height: 200px;
       background: $light-color;
       img {
-       opacity: 0.5;
+       opacity: 1;
        @extend .trans;
        &:hover {
-        opacity: 1;
+        opacity: 0.5;
         cursor: pointer;
         cursor: hand;
        }
@@ -1468,9 +1468,9 @@ body.no-scroll {
      a {
       img {
        @extend .trans;
-       opacity: 0.5;
+       opacity: 1;
        &:hover {
-        opacity: 1;
+        opacity: 0.5;
        }
       }
      }
