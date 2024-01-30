@@ -1300,3 +1300,34 @@ function posts_auto_description_func( $desc, $post_id, $post_type, $taxonomy) {
 						in our beautiful island. Do not miss a minute!Βοοκ now!','motivar');
     }
 }
+
+add_shortcode(
+    'espa_banner',
+    function ($atts) {
+        extract(
+            shortcode_atts(
+                array(
+                    'media_id' => '',
+                    'attachment_id' => ''
+                ),
+                $atts
+            )
+        );
+
+        $attachment_url = wp_get_attachment_url($attachment_id);
+        $media_image = wp_get_attachment_image($media_id, 'medium');
+
+        $content = '
+    <div class="espa_banner">
+      <div class="main_wrapper">
+      <a href="' . $attachment_url . '" target="_blank">
+        ' . $media_image . '
+      </a>
+      </div>
+    </div>';
+
+        return $content;
+    },
+    10,
+    1
+);

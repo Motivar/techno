@@ -1615,3 +1615,23 @@ li.wpml-ls-item {
   margin-bottom: 30px;
  }
 }
+body.home {
+ .site-footer {
+  padding-bottom: 100px;
+ }
+}
+#espa_container {
+     position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    left: 0;
+    z-index: 2;
+    .espa_wrapper {
+     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+}

@@ -13,6 +13,30 @@
 
 	</div><!-- #content -->
 </div><!-- #barba js -->
+
+<?php
+if (is_front_page()) {
+	?>
+	<div id="espa_container">
+	<div class="espa_wrapper">
+	<?php 
+	switch (ICL_LANGUAGE_CODE) {
+		case 'en':
+				echo do_shortcode('[espa_banner media_id="2301" attachment_id="2297"]');
+			break;
+		
+		default:
+				echo do_shortcode('[espa_banner media_id="2299" attachment_id="2297"]');
+			break;
+	}
+
+	?>
+	</div>
+	</div>
+<?php
+}
+?>
+
 	<footer id="colophon" class="site-footer">
 		<div class="footer_social"><?php echo do_shortcode('[social_media][wpml_language_switcher flags="1" link_current="0" native="0"]'); ?></div>
 		<div class="footer_menu">
