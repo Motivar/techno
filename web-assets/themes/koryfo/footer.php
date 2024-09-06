@@ -18,17 +18,18 @@
 if (is_front_page()) {
 	?>
 	<div id="espa_container">
-	<div class="espa_wrapper">
+	<div class="espa_wrapper motivar_test">
 	<?php 
-	switch (ICL_LANGUAGE_CODE) {
-		case 'en':
-				echo do_shortcode('[espa_banner media_id="2301" attachment_id="2297"]');
-			break;
-		
-		default:
-				echo do_shortcode('[espa_banner media_id="2299" attachment_id="2297"]');
-			break;
-	}
+switch (ICL_LANGUAGE_CODE) {
+    case 'en':
+        echo do_shortcode('[espa_banner media_id="2301" attachment_id="2304"]');
+        break;
+
+    default:
+        echo do_shortcode('[espa_banner media_id="2299" attachment_id="2306"]');
+        break;
+}
+
 
 	?>
 	</div>
